@@ -236,7 +236,7 @@ def getRecieverHistory(ID):
         cursor = connection.cursor(dictionary=True)
         finalData = []
         cursor.execute(
-            'SELECT items.item_id, users.ID, items.item_name, users.Name, items.quantity, items.description, items.zipcode, items.city, items.category FROM Donation Inner join items on donation.item_id=items.item_id INNER JOIN users on items.donor_id=users.ID where recipient_id= %s', (int(ID),))
+            'SELECT items.item_id, users.ID, items.item_name, users.Name, items.quantity, items.description, items.zipcode, items.city, items.category FROM donation Inner join items on donation.item_id=items.item_id INNER JOIN users on items.donor_id=users.ID where recipient_id= %s', (int(ID),))
         data = cursor.fetchall()
         for record in data:
             finalData.append({"itemId": record["item_id"], "itemName": record["item_name"], "itemQuantity": record["quantity"], "itemDescription": record["description"],
@@ -313,9 +313,9 @@ def getUserProfileByID(ID):
         cursor.execute(
             'SELECT name, email, city, zipcode, password, interests FROM users where ID = %s', (int(ID),))
         user = cursor.fetchone()
-        user["city"] = ast.literal_eval(user["city"])
-        user["zipcode"] = ast.literal_eval(user["zipcode"])
-        user["interests"] = ast.literal_eval(user["interests"])
+        # user["city"] = ast.literal_eval(user["city"])
+        # user["zipcode"] = ast.literal_eval(user["zipcode"])
+        # user["interests"] = ast.literal_eval(user["interests"])
 
         print(type(user))
         cursor.close()
@@ -392,9 +392,9 @@ def getUserProfileByEmail(email):
             'SELECT ID, name, email, city, zipcode, interests FROM users WHERE email = %s', (email,))
         user = cursor.fetchone()
         print(user)
-        user["city"] = ast.literal_eval(user["city"])
-        user["zipcode"] = ast.literal_eval(user["zipcode"])
-        user["interests"] = ast.literal_eval(user["interests"])
+        # user["city"] = ast.literal_eval(user["city"])
+        # user["zipcode"] = ast.literal_eval(user["zipcode"])
+        # user["interests"] = ast.literal_eval(user["interests"])
         cursor.close()
         return user
     except mysql.connector.Error as error:
