@@ -314,9 +314,9 @@ def getUserProfileByID(ID):
         cursor.execute(
             'SELECT name, email, city, zipcode, password, interests FROM users where ID = %s', (int(ID),))
         user = cursor.fetchone()
-        user["city"] = ast.literal_eval(user["city"])
-        user["zipcode"] = ast.literal_eval(user["zipcode"])
-        user["interests"] = ast.literal_eval(user["interests"])
+        # user["city"] = ast.literal_eval(user["city"])
+        # user["zipcode"] = ast.literal_eval(user["zipcode"])
+        # user["interests"] = ast.literal_eval(user["interests"])
 
         print(type(user))
         cursor.close()
@@ -393,9 +393,9 @@ def getUserProfileByEmail(email):
             'SELECT ID, name, email, city, zipcode, interests FROM users WHERE email = %s', (email,))
         user = cursor.fetchone()
         print(user)
-        user["city"] = ast.literal_eval(user["city"])
-        user["zipcode"] = ast.literal_eval(user["zipcode"])
-        user["interests"] = ast.literal_eval(user["interests"])
+        # user["city"] = ast.literal_eval(user["city"])
+        # user["zipcode"] = ast.literal_eval(user["zipcode"])
+        # user["interests"] = ast.literal_eval(user["interests"])
         cursor.close()
         return user
     except mysql.connector.Error as error:
