@@ -9,7 +9,7 @@ from src.Backend.dbconfig import constants
 
 try:
     connection = mysql.connector.connect(
-        host=constants["host"], user=constants["user"], password=constants["password"], database=constants["database"])
+        host=constants["host"], user=constants["user"], password=constants["password"], database=constants["database"], port=constants["port"])
 except:
     pass
 # cursor = connection.cursor(dictionary=True)
