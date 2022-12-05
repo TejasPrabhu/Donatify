@@ -5,15 +5,14 @@ import ast
 import re
 import mysql.connector
 from ast import literal_eval as make_tuple
-from dbconfig import constants
+from src.Backend.dbconfig import constants
 import smtplib, ssl
 
-# try:
+try:
 connection = mysql.connector.connect(
     host=constants["host"], user=constants["user"], password=constants["password"], database=constants["database"])
-print("Hello World")
-# except:
-    # pass
+except:
+    pass
 # cursor = connection.cursor(dictionary=True)
 # cursor.execute('set GLOBAL max_allowed_packet=67108864')
 # connection.query('SET GLOBAL connect_timeout=6000')
