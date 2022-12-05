@@ -37,7 +37,7 @@ jobs:
     - name: Run the frontend tests
       run: |
         cd src/frontend
-        npm test -- --coverage
+        npm test -- --coverage --updateSnapshot
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v2

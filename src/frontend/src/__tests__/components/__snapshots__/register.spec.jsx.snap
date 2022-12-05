@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports['registerUserComponent renders without crashing 1'] = `
+exports[`registerUserComponent renders without crashing 1`] = `
 <div
   className="signup"
 >
@@ -210,6 +210,7 @@ exports['registerUserComponent renders without crashing 1'] = `
                 <input
                   name="city"
                   type="hidden"
+                  value=""
                 />
               </div>
             </div>
@@ -383,6 +384,7 @@ exports['registerUserComponent renders without crashing 1'] = `
                 <input
                   name="interests"
                   type="hidden"
+                  value=""
                 />
               </div>
             </div>
