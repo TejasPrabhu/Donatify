@@ -14,6 +14,7 @@ import Profile from './profile';
 import History from './history';
 import Donate from './donate';
 import MarketPlace from './marketPlace';
+import ItemDetail from './itemDetail';
 
 const { Header, Sider, Content } = Layout;
 
@@ -166,6 +167,7 @@ class Home extends Component {
 						{(this.state.content === 'donate' || this.props.tab === 'donate') && <Donate props={this.props} />}
 						{(this.state.content === 'profile' || this.props.tab === 'profile') && <Profile props={this.props} />}
 						{(this.state.content === 'marketPlace' || this.props.tab === 'marketPlace') && <MarketPlace props={this.props} />}
+						{(this.state.content === 'itemDetail' || this.props.tab === 'itemDetail') && <ItemDetail props={this.props} />}
 					</Content>
 				</Layout>
 			</Layout>

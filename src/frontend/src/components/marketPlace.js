@@ -4,6 +4,7 @@ import { Card, Avatar, Modal, Button } from 'antd';
 const { Meta } = Card;
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
+//import { Link } from 'react-router-dom';
 // const recieveItemAPI = require('../API/recieveItem');
 
 /**
@@ -183,7 +184,7 @@ class MarketPlace extends Component {
 	};
 
 	/**
-	 * Update state with type of history required
+	 * Update state with city choice
 	 * @param {Object} event onChange event for user input
 	 */
 	setCity = (event) => {
@@ -216,6 +217,12 @@ class MarketPlace extends Component {
 		//     showAlert: !this.state.showAlert
 		// })
 	};
+
+	redirectToPath = (value) => {
+		const url = new URL(document.location.href);
+		document.location.href = `${url.origin}${value}`;
+	};
+
 
 	/**
 	 * Render receiving component
@@ -328,6 +335,12 @@ class MarketPlace extends Component {
 									<Button type="primary" onClick={() => showModal(d)} style={{ margin: 6, marginLeft: 20 }}>
 										View Details
 									</Button>
+									{/* <Link to={`/home/itemDetail/${d.itemId}`}>
+										Open
+									</Link>
+									<Button onClick={() => this.redirectToPath(`/home/itemDetail/${d.itemId}`)}>
+										Open
+									</Button> */}
 									<Button type="primary" onClick={() => this.showDonorContact(d.donorEmail)} style={{ marginBottom: 10, marginLeft: 20 }}>
 										Contact Donor
 									</Button>
@@ -369,6 +382,9 @@ class MarketPlace extends Component {
 										<Button type="primary" onClick={() => showModal(d)} style={{ margin: 6, marginLeft: 20 }}>
 											View Details
 										</Button>
+										{/* <Link to={`/home/itemDetail/${d.ItemId}`}>
+											Open
+										</Link> */}
 										<Button type="primary" onClick={() => this.showDonorContact(d.donorEmail)} style={{ marginBottom: 10, marginLeft: 20 }}>
 											Contact Donor
 										</Button>
