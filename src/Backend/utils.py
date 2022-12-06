@@ -34,6 +34,43 @@ def connect_to_db():
 
 connection = connect_to_db
 
+def getItemByID(ID):
+    """
+    Get the Item details given his ID.
+
+    Parameters
+    ----------
+    ID : int
+        ID of the item.
+
+    Returns
+    ----------
+    list
+        Returns a list containing the information of an item given his id.
+    """
+
+    try:
+        cursor = connection.cursor(dictionary=True)
+        cursor.execute(
+            'select * from items where item_id = %s', (int(ID),))
+        item = cursor.fetchone()
+        # user["city"] = ast.literal_eval(user["city"])
+        # user["zipcode"] = ast.literal_eval(user["zipcode"])
+        # user["interests"] = ast.literal_eval(user["interests"])
+
+        print(type(item))
+        cursor.close()
+        return item
+    except mysql.connector.Error as error:
+        print(error)
+        return []
+
+    except Exception as e:
+        print("some error occurred in getItemByID: {}".format(e))
+        return []
+        # exit("some error occurred in get_items: {}".format(e))
+
+
 def get_items(page, user_id):
 	"""
 	Get all the items given the page number and user id from the database.
