@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import getRecipientItemsAPI from '../API/getRecipientItems';
+import updateItemAPI from '../API/updateItem';
+import addBidderAPI from '../API/addBidder';
 import { Card, Avatar, Modal, Button } from 'antd';
+import Password from 'antd/lib/input/Password';
 const { Meta } = Card;
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
@@ -44,117 +47,7 @@ class MarketPlace extends Component {
 		// 	itemCategory: 'food',
 		// 	donorEmail: 'abc@gmail.com'
 		// },
-		// {
-		// 	itemId: 2,
-		// 	itemName: 'rice2',
-		// 	itemQuantity: 1,
-		// 	itemDescription: 'left over rice',
-		// 	itemZipCode: '27606',
-		// 	itemCity: 'raleigh',
-		// 	itemDonorId: '1',
-		// 	itemCategory: 'food'
-		// },
-		// {
-		// 	itemId: 3,
-		// 	itemName: 'rice3',
-		// 	itemQuantity: 1,
-		// 	itemDescription: 'left over rice',
-		// 	itemZipCode: '27606',
-		// 	itemCity: 'raleigh',
-		// 	itemDonorId: '1',
-		// 	itemCategory: 'food'
-		// },
-		// {
-		// 	itemId: 4,
-		// 	itemName: 'rice4',
-		// 	itemQuantity: 1,
-		// 	itemDescription: 'left over rice',
-		// 	itemZipCode: '27606',
-		// 	itemCity: 'raleigh',
-		// 	itemDonorId: '1',
-		// 	itemCategory: 'food'
-		// },
-		// {
-		// 	itemId: 5,
-		// 	itemName: 'rice5',
-		// 	itemQuantity: 1,
-		// 	itemDescription: 'left over rice',
-		// 	itemZipCode: '27606',
-		// 	itemCity: 'raleigh',
-		// 	itemDonorId: '1',
-		// 	itemCategory: 'food'
-		// },
-		// {
-		// 	itemId: 6,
-		// 	itemName: 'rice6',
-		// 	itemQuantity: 1,
-		// 	itemDescription: 'left over rice',
-		// 	itemZipCode: '27606',
-		// 	itemCity: 'raleigh',
-		// 	itemDonorId: '1',
-		// 	itemCategory: 'food'
-		// },
-		// {
-		// 	itemId: 7,
-		// 	itemName: 'rice7',
-		// 	itemQuantity: 1,
-		// 	itemDescription: 'left over rice',
-		// 	itemZipCode: '27606',
-		// 	itemCity: 'raleigh',
-		// 	itemDonorId: '1',
-		// 	itemCategory: 'food'
-		// },
-		// {
-		// 	itemId: 8,
-		// 	itemName: 'rice8',
-		// 	itemQuantity: 1,
-		// 	itemDescription: 'left over rice',
-		// 	itemZipCode: '27606',
-		// 	itemCity: 'raleigh',
-		// 	itemDonorId: '1',
-		// 	itemCategory: 'food'
-		// },
-		// {
-		// 	itemId: 9,
-		// 	itemName: 'rice9',
-		// 	itemQuantity: 1,
-		// 	itemDescription: 'left over rice',
-		// 	itemZipCode: '27606',
-		// 	itemCity: 'raleigh',
-		// 	itemDonorId: '1',
-		// 	itemCategory: 'food'
-		// },
-		// {
-		// 	itemId: 10,
-		// 	itemName: 'rice10',
-		// 	itemQuantity: 1,
-		// 	itemDescription: 'left over rice',
-		// 	itemZipCode: '27606',
-		// 	itemCity: 'raleigh',
-		// 	itemDonorId: '1',
-		// 	itemCategory: 'food'
-		// },
-		// {
-		// 	itemId: 11,
-		// 	itemName: 'rice11',
-		// 	itemQuantity: 1,
-		// 	itemDescription: 'left over rice',
-		// 	itemZipCode: '27606',
-		// 	itemCity: 'raleigh',
-		// 	itemDonorId: '1',
-		// 	itemCategory: 'food'
-		// },
-		// {
-		// 	itemId: 12,
-		// 	itemName: 'rice12',
-		// 	itemQuantity: 1,
-		// 	itemDescription: 'left over rice',
-		// 	itemZipCode: '27606',
-		// 	itemCity: 'raleigh',
-		// 	itemDonorId: '1',
-		// 	itemCategory: 'food'
-		// }
-		// ];
+		// ]
 		this.setState({
 			recipientItems: res.data.data
 		});
@@ -216,6 +109,21 @@ class MarketPlace extends Component {
 		// this.setState({
 		//     showAlert: !this.state.showAlert
 		// })
+	};
+
+	bidOnItem = async (item) => {
+
+		let userId = JSON.parse(localStorage.getItem('userLogonDetails')).userId;
+		item.itemQuantity = item.itemQuantity - 1;
+		const updateItemResponse = await updateItemAPI(item);
+		addBidderAPI(item.itemId, userId);
+		if (updateItemResponse.data && updateItemResponse.data.status===200) {
+			alert('Bid placed successfully');
+			this.loadData();
+			return true;
+		}
+		alert('Something is wrong with placing the bid');
+		return false;
 	};
 
 	redirectToPath = (value) => {
@@ -343,6 +251,9 @@ class MarketPlace extends Component {
 									</Button> */}
 									<Button type="primary" onClick={() => this.showDonorContact(d.donorEmail)} style={{ marginBottom: 10, marginLeft: 20 }}>
 										Contact Donor
+									</Button>
+									<Button type="primary" onClick={() => this.bidOnItem(d)}>
+										Bid
 									</Button>
 									{/* {this.state.showAlert ? (<Alert
                                         message="Donor Details"
