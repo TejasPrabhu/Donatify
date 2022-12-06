@@ -1,4 +1,4 @@
-# [Donatify](https://agupta15k.github.io/ncsu_se_fall22_22_pr_1/)
+# [Donatify](https://github.com/TejasPrabhu/Donatify)
 
 [![GitHub](https://img.shields.io/github/license/agupta15k/ncsu_se_fall22_22_pr_1?color=green&label=license&logo=MIT)](https://github.com/agupta15k/ncsu_se_fall22_22_pr_1/blob/main/LICENSE.md)
 [![GitHub issues](https://img.shields.io/github/issues-raw/agupta15k/ncsu_se_fall22_22_pr_1)](https://github.com/agupta15k/ncsu_se_fall22_22_pr_1/issues)
@@ -9,13 +9,9 @@
 [![DOI](https://zenodo.org/badge/557621983.svg)](https://zenodo.org/badge/latestdoi/557621983)
 [![codecov](https://codecov.io/gh/TejasPrabhu/Donatify/branch/main/graph/badge.svg?token=y7kqfbG9mX)](https://codecov.io/gh/TejasPrabhu/Donatify)
 
-:clap: “Happiness doesn’t result from what we get, but from what we give." ~ Ben Carson :clap:
+This project is an extension of the previous work : [Donatify](https://agupta15k.github.io/ncsu_se_fall22_22_pr_1/)
 
-Majority of us have noticed items which go to waste even when they are in their prime condition. For example, many atriums, dining halls around the world, dispose of their leftovers at the end of the day, and a lot of food is being wasted.
-
-We introduce to you Donatify, a platform for donors and receivers to communicate, donate and recieve items respectively. In simple terms, a user would put up items which they would like to donate, and other users, if their interests match with the item, would choose to receive it.
-
-**Want to be part of an environment saving initiative, while sitting in the comfort of your home?** Get on Donatify, donate the stuff you don't need, and feel good.
+The gift of giving always comes full circle. Giving and receiving go hand in hand, and being generous is a selfless act. F feeling good about contributing is one of the main benefits of giving. Giving back to people in need allows you to grow personally and gives you a higher sense of fulfillment. It also makes you feel good to serve others. You may donate that extra food or that unused item to someone in need rather than throwing it trash or stashing it at the back of the storehouse. Knowing that you're contributing much-needed resources to a worthwhile cause for those in need gives you a sense of self-worth. You and your loved one will also feel good about helping others, which is an added bonus.
 
 ## Demo video
 
@@ -23,17 +19,14 @@ https://user-images.githubusercontent.com/112216701/194792312-64c5dea3-24a1-4a61
 
 ## App in action
 
-List available items:
+registration with OTP and Login:
 
-![](https://raw.githubusercontent.com/agupta15k/ncsu_se_fall22_22_pr_1/main/docs/execution/screenshots/marketplace.png)
 
 Donate an item:
 
-![](https://raw.githubusercontent.com/agupta15k/ncsu_se_fall22_22_pr_1/main/docs/execution/screenshots/donate.png)
 
-Accept a donation:
+Marketplace:
 
-![](https://raw.githubusercontent.com/agupta15k/ncsu_se_fall22_22_pr_1/main/docs/execution/screenshots/acceptDonation.png)
 
 ## Getting started
 
@@ -116,7 +109,7 @@ Accept a donation:
     **Backend**
 
     1. We have added the print statements in all of the backend functions to know execution of the codes.
-    2. In case of error the print statements will let us know about the issue of code break.
+    2. In case of error the print statements do let us know about the issue of code break.
     3. The api responses the status code, valid message and response header which they can share back for troubleshooting.
 
     **Frontend**
@@ -188,11 +181,11 @@ Accept a donation:
 
 ## Roadmap
 
-* Roadmap for this project can be found [here](https://github.com/users/agupta15k/projects/2).
+* Roadmap for this project can be found [here](https://github.com/users/TejasPrabhu/projects/2).
 
 ## Chat channel
 
-* All the communication was handled through a private chat channel and online meets. Some screenshots of discussions can be found [here](https://github.com/agupta15k/ncsu_se_fall22_22_pr_1/tree/main/docs/chatChannel/screenshots).
+* All the communication was handled through a private chat channel, online and offline meets. Some screenshots of discussions can be found [here](https://github.com/TejasPrabhu/Donatify/tree/main/docs/chatChannel/screenshots).
 
 ## Support
 We do our best to answer all tickets in a timely manner, but sometimes we accumulate a backlog and may take awhile to respond. Please be patient—we will get back to you as soon as we can! 
