@@ -424,7 +424,7 @@ class History extends Component {
 									cover={
 										<img
 											alt="example"
-											src="https://picsum.photos/300/200"
+											src={(donor.imgName !== '') ? 'http://127.0.0.1:8080/'.concat(donor.imgName) : 'https://picsum.photos/300/200'}
 										/>
 									}
 								// actions={[

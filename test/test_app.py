@@ -1,9 +1,10 @@
+import os.path
 import unittest
 from unittest.mock import patch
 import json
 from urllib import response
 
-from src.Backend.app import app
+from src.Backend.app import app, UPLOAD_FOLDER
 
 
 class TestApp(unittest.TestCase):
@@ -204,7 +205,7 @@ class TestApp(unittest.TestCase):
     def test_additem(self, mock_insert_item):
         tester = app.test_client(self)
         inpData = {"item_name": "Rice", "quantity": 1, "description": "Rice",
-                   "zipcode": "27605", "city": "Raleigh", "donor_id": 3, "category": "Food"}
+                   "zipcode": "27605", "city": "Raleigh", "donor_id": 3, "category": "Food", "img_url": "test.png"}
         mock_insert_item.return_value = True, "Record inserted successfully into item table"
         response = tester.post("/additem", data=json.dumps(inpData),
                                headers={'content-type': 'application/json'})
@@ -232,10 +233,13 @@ class TestApp(unittest.TestCase):
                     "message": "Fetched records successfully"}
         assert expected == json.loads(response.get_data(as_text=True))
 
-    # @patch('src.Backend.app.getItemByID')
-    # def test_getItem_get(self, mock_getItemByID):
-    # 	tester = app.test_client(self)
-    #     mock_getItemByID.return_value = {"item_id": 3, "item_name": "book", "quantity": 2, "description": "old books", "zipcode": ["27606"], "city": "Raleigh", "donor_id": 1,"category": "furniture" }
-    #     response = tester.get('/item?id=3')
-    #     expected = {"status": 200, "data":{"item_id": 3, "item_name": "book", "quantity": 2, "description": "old books", "zipcode": ["27606"], "city": "Raleigh", "donor_id": 1,"category": "furniture" }, "message": "Item gotten succesfully"}
-    #     assert expected == json.loads(response.get_data(as_text=True))
+    def test_upload_image(self):
+        tester = app.test_client(self)
+        img_path = os.path.join(UPLOAD_FOLDER, 'test.png')
+        with open(img_path, 'rb') as fp:
+            response = tester.post("/uploadimage", data={"image": fp})
+
+        assert response.status_code == response.json['status'] == 200
+        assert response.json['message'] == ""
+        assert img_path in response.json['data']['imgName']
+

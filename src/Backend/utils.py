@@ -131,7 +131,7 @@ def get_items(page, user_id):
 	#         print("MySQL connection() is closed")
 
 
-def insert_item(item_name, quantity, description, zipcode, city, donor_id, category):
+def insert_item(item_name, quantity, description, zipcode, city, donor_id, category, img_url):
 	"""
 	Inserts an item into the database.
 
@@ -161,10 +161,10 @@ def insert_item(item_name, quantity, description, zipcode, city, donor_id, categ
 	try:
 		cursor = connection().cursor(dictionary=True)
 		mysql_insert_query = """INSERT INTO items (item_name, quantity, description, zipcode, city, donor_id, category)
-								VALUES (%s, %s, %s, %s, %s, %s, %s) """
+								VALUES (%s, %s, %s, %s, %s, %s, %s, %s) """
 
 		record = (item_name, quantity, description,
-				  zipcode, city, donor_id, category)
+				  zipcode, city, donor_id, category, img_url)
 		cursor.execute(mysql_insert_query, record)
 		connection().commit()
 		print("Record inserted successfully into item table")
@@ -256,8 +256,9 @@ def getDonorHistory(ID):
 		data = cursor.fetchall()
 		print(data)
 		for record in data:
+            img_name = record["img_url"] if record["img_url"] is not None else ''
 			finalData.append({"itemId": record["item_id"], "itemName": record["item_name"], "itemQuantity": record["quantity"], "itemDescription": record["description"],
-							  "itemZipCode": record["zipcode"], "itemCity": record["city"], "itemDonorId": record["donor_id"], "itemCategory": record["category"]})
+							  "itemZipCode": record["zipcode"], "itemCity": record["city"], "itemDonorId": record["donor_id"], "itemCategory": record["category"], "imgName": img_name})
 		# print(record[0]["Interests"])
 		cursor.close()
 		return True, finalData
@@ -370,9 +371,9 @@ def getUserProfileByID(ID):
 		cursor.execute(
 			'SELECT name, email, city, zipcode, password, interests FROM users where ID = %s', (int(ID),))
 		user = cursor.fetchone()
-		user["city"] = ast.literal_eval(user["city"])
-		user["zipcode"] = ast.literal_eval(user["zipcode"])
-		user["interests"] = ast.literal_eval(user["interests"])
+		# user["city"] = ast.literal_eval(user["city"])
+		# user["zipcode"] = ast.literal_eval(user["zipcode"])
+		# user["interests"] = ast.literal_eval(user["interests"])
 
 		print(type(user))
 		cursor.close()
