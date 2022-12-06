@@ -96,6 +96,9 @@ class Donate extends React.Component {
 			alert('Missing value for category. Enter category for the item.');
 			return false;
 		}
+		if (this.state[keys['itemQuantity']] === '') {
+			this.setState({itemQuantity: 1});
+		}
 		if (this.state.selectedFile === null) {
 			alert('Missing value for image. Please upload an image.');
 			return false;
@@ -204,6 +207,10 @@ class Donate extends React.Component {
 								<div className='form-group'>
 									<img src='../item-description.png' alt='item description' />
 									<textarea name='description' id='itemDescription' placeholder='Item description' value={this.state.itemDescription} onChange={this.handleInput} required />
+								</div>
+								<div className='form-group'>
+									<img src='../signup-zip.png' alt='item quantity' />
+									<input type='text' name='quantity' id='itemQuantity' placeholder='Item quantity' value={this.state.itemQuantity} onChange={this.handleInput} />
 								</div>
 								<div className='form-group'>
 									<img src='../signup-zip.png' alt='item zipcode' />
