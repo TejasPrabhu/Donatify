@@ -3,7 +3,7 @@ import getRecipientItemsAPI from '../API/getRecipientItems';
 import updateItemAPI from '../API/updateItem';
 import addBidderAPI from '../API/addBidder';
 import { Card, Avatar, Modal, Button } from 'antd';
-import Password from 'antd/lib/input/Password';
+
 const { Meta } = Card;
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
@@ -130,7 +130,6 @@ class MarketPlace extends Component {
 		const url = new URL(document.location.href);
 		document.location.href = `${url.origin}${value}`;
 	};
-
 
 	/**
 	 * Render receiving component
