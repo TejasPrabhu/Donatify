@@ -17,7 +17,7 @@ This project and everyone participating in it is governed by the repository owne
 
 This section guides you through submitting a bug report.
 #### Before submitting an issue please:
-* Check the **troubleshooting section** in the [README](https://github.com/agupta15k/ncsu_se_fall22_22_pr_1/blob/main/README.md) file.
+* Check the **troubleshooting section** in the [README](https://github.com/TejasPrabhu/Donatify/blob/main/README.md) file.
 * Determine the **repository in which the issue should be reported in.**
 * Perform a **cursory search** to check if the problem was already reported or not. If this is an open issue, please do add a comment to it.
 
@@ -34,7 +34,7 @@ This section guides you through submitting a bug report.
 This section guides you through submitting an enhancement suggestion for the Donatify.
 
 #### Before Submitting An Enhancement Suggestion
-* Check the **troubleshooting section** in the [README](https://github.com/agupta15k/ncsu_se_fall22_22_pr_1/blob/main/README.md) file.
+* Check the **troubleshooting section** in the [README](https://github.com/TejasPrabhu/Donatify/blob/main/README.md) file.
 * Determine the **repository in which the enhancement should be suggested in.**
 * Perform a **cursory search** to check if the enhancement was already suggested or not. If this is an open issue, please do add a comment to it.
 
