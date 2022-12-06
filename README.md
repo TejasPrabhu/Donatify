@@ -1,7 +1,7 @@
 # [Donatify](https://tejasprabhu.github.io/Donatify/)
 
 [![GitHub](https://img.shields.io/github/license/TejasPrabhu/Donatify)](https://github.com/TejasPrabhu/Donatify/blob/main/LICENSE.md)
-[![GitHub issues](https://img.shields.io/github/issues-raw/TejasPrabhu/Donatify))](https://github.com/TejasPrabhu/Donatify/issues)
+[![GitHub issues](https://img.shields.io/github/issues-raw/TejasPrabhu/Donatify)](https://github.com/TejasPrabhu/Donatify/issues)
 [![GitHub closed issues](https://img.shields.io/github/issues-closed-raw/TejasPrabhu/Donatify)](https://github.com/TejasPrabhu/Donatify/issues?q=is%3Aissue+is%3Aclosed)
 [![GitHub pull requests](https://img.shields.io/github/issues-pr/TejasPrabhu/Donatify)](https://github.com/TejasPrabhu/Donatify/pulls)
 [![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed-raw/TejasPrabhu/Donatify)](https://github.com/TejasPrabhu/Donatify/pulls?q=is%3Apr+is%3Aclosed)
@@ -13,10 +13,21 @@ This project is an extension of the previous work : [Donatify](https://agupta15k
 
 The gift of giving always comes full circle. Giving and receiving go hand in hand, and being generous is a selfless act. F feeling good about contributing is one of the main benefits of giving. Giving back to people in need allows you to grow personally and gives you a higher sense of fulfillment. It also makes you feel good to serve others. You may donate that extra food or that unused item to someone in need rather than throwing it trash or stashing it at the back of the storehouse. Knowing that you're contributing much-needed resources to a worthwhile cause for those in need gives you a sense of self-worth. You and your loved one will also feel good about helping others, which is an added bonus.
 
-## Demo video
+
+## Motivation
+At any given time, there are billions of people in the world who are in a worse situation than we are. Some of these individuals struggle with issues that are not their fault or are unavoidable and unchangeable. Because we are social creatures, assisting people who can't help themselves is the best way for us to progress as a species. We have a responsibility to care for others and support those who are less fortunate than we are. When we spend more money, time, or commodities, we have the chance to get better. Let's now discuss the importance that donation has.
+
+First and foremost, donating a fantastic mood enhancer. Being able to help others is incredibly empowering, and as a result, you may feel happier and more fulfilled. Making a donation is associated with greater activity in the part of the brain that detects joy, according to research, demonstrating that the proverb "it is better to say than to receive" is indeed true. Secondly, the possibility to meet new people and broaden your social network is provided by charitable donations. This is especially true when you donate your time and share your knowledge for a good cause.
+
+Finally, the biggest positive of donation is strengthening the global community. We're all working to improve the state of the globe. We may show our appreciation for the individuals and causes we care about throughout the holidays. A single person's contributions can benefit humanity as a whole and have a positive impact on more individuals than they may realize. Others throughout the world are not as fortunate. By raising everyone's standard of living, charitable communities contribute to a happier and healthier planet. By improving the planet, you "prepare the ground" for future generations, as well as your own inheritance.
+
+So, we through our simple application, have created a platform for people to donate and receive, which can be used by anyone to contribute to the greate good.
+
+## Previous demonstration
 
 https://user-images.githubusercontent.com/112216701/194792312-64c5dea3-24a1-4a61-942c-df805e35800a.mp4
 
+## Application after updation
 ## App in action
 
 registration with OTP and Login:
