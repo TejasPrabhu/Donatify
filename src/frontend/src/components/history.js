@@ -140,14 +140,14 @@ class History extends Component {
 		};
 		return (
 			<>
-				{this.state.isModalOpen ? (<Modal title="Basic Modal" open={this.state.isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+				{this.state.isModalOpen ? (<Modal title={this.state.d.itemName} open={this.state.isModalOpen} onOk={handleOk} onCancel={handleCancel}>
 					<p>Item Name: {this.state.d.itemName}</p>
 					<p>Item Quantity: {this.state.d.itemQuantity}</p>
 					<p>Item Description: {this.state.d.itemDescription}</p>
 					<p>Item Zip Code: {this.state.d.itemZipCode}</p>
 					<p>Item City: {this.state.d.itemCity}</p>
 					<p>Item Category: {this.state.d.itemCategory}</p>
-					{!this.state.history==='Donor History'?(<p>Donor Name: {this.state.d.itemDonorName || ''}</p>):(<></>)}
+					{!this.state.history === 'Donor History' ? (<p>Donor Name: {this.state.d.itemDonorName || ''}</p>) : (<></>)}
 				</Modal>) : (<></>)}
 
 				{/* <Modal title="Item Details" open={this.state.isModalOpen} onOk={handleOk} onCancel={handleCancel}>
@@ -183,7 +183,8 @@ class History extends Component {
 										title={donor.itemName}
 										description={donor.itemDescription}
 									/>
-									<Button type="primary" onClick={() => showModal(donor)}>
+									<Button type="primary" onClick={() => showModal(donor)}
+										style={{ margin: 20 }}>
 										View Details
 									</Button>
 
@@ -211,7 +212,7 @@ class History extends Component {
 								// ]}
 								>
 									<Meta
-										avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
+										//avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
 										title={d.itemName}
 										description={d.itemDescription}
 									/>

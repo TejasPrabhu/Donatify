@@ -7,6 +7,7 @@ from src.Backend.app import app
 
 
 class TestApp(unittest.TestCase):
+
     def test_register_get(self):
         tester = app.test_client(self)
         response = tester.get("/register")
@@ -47,6 +48,12 @@ class TestApp(unittest.TestCase):
         tester = app.test_client(self)
         response = tester.get("/")
         expected = {"status": 200, "data": {}, "message": "Backend working"}
+        assert expected == json.loads(response.get_data(as_text=True))
+
+    def test_getitem_get(self):
+        tester = app.test_client(self)
+        response = tester.get("/item")
+        expected = {'data': {}, 'message': '', 'status': 200}
         assert expected == json.loads(response.get_data(as_text=True))
 
     @patch('src.Backend.app.updateProfile')
@@ -224,3 +231,11 @@ class TestApp(unittest.TestCase):
                                             "description": "Left over rice", "zipcode": "27606", "city": "Raleigh", "donor_id": 2, "category": "Food"},
                     "message": "Fetched records successfully"}
         assert expected == json.loads(response.get_data(as_text=True))
+
+    # @patch('src.Backend.app.getItemByID')
+    # def test_getItem_get(self, mock_getItemByID):
+    # 	tester = app.test_client(self)
+    #     mock_getItemByID.return_value = {"item_id": 3, "item_name": "book", "quantity": 2, "description": "old books", "zipcode": ["27606"], "city": "Raleigh", "donor_id": 1,"category": "furniture" }
+    #     response = tester.get('/item?id=3')
+    #     expected = {"status": 200, "data":{"item_id": 3, "item_name": "book", "quantity": 2, "description": "old books", "zipcode": ["27606"], "city": "Raleigh", "donor_id": 1,"category": "furniture" }, "message": "Item gotten succesfully"}
+    #     assert expected == json.loads(response.get_data(as_text=True))
