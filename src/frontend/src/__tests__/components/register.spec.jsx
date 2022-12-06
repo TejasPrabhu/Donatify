@@ -3,10 +3,6 @@ import RegisterUser from '../../components/register';
 import React from 'react';
 
 describe('registerUserComponent', () => {
-	it('renders without crashing', () => {
-		const component = renderer.create(<RegisterUser />);
-		expect(component.toJSON()).toMatchSnapshot();
-	});
 
 	it('initial state set correctly', () => {
 		const component = renderer.create(<RegisterUser />);
@@ -17,7 +13,11 @@ describe('registerUserComponent', () => {
 			rePass: '',
 			cities: [],
 			zipCodes: [],
-			interests: []
+			interests: [],
+			genotp: '',
+			mailbtn: 'Send OTP',
+			otp: '',
+			otpbtn: 'Verify OTP'
 		};
 		const actualOutput = component.getInstance().state;
 		expect(expectedOutput).toEqual(actualOutput);
@@ -32,7 +32,11 @@ describe('registerUserComponent', () => {
 			rePass: '',
 			cities: [],
 			zipCodes: [],
-			interests: []
+			interests: [],
+			genotp: '',
+			mailbtn: 'Send OTP',
+			otp: '',
+			otpbtn: 'Verify OTP'
 		};
 		const input = {
 			type: 'change',
@@ -55,7 +59,11 @@ describe('registerUserComponent', () => {
 			rePass: '',
 			cities: ['test'],
 			zipCodes: [],
-			interests: []
+			interests: [],
+			genotp: '',
+			mailbtn: 'Send OTP',
+			otp: '',
+			otpbtn: 'Verify OTP'
 		};
 		const input = {
 			name: 'cities',
@@ -78,7 +86,11 @@ describe('registerUserComponent', () => {
 				id: 'test',
 				text: 'test'
 			}],
-			interests: []
+			interests: [],
+			genotp: '',
+			mailbtn: 'Send OTP',
+			otp: '',
+			otpbtn: 'Verify OTP'
 		};
 		const input = {
 			id: 'test',
@@ -98,7 +110,11 @@ describe('registerUserComponent', () => {
 			rePass: '',
 			cities: [],
 			zipCodes: [],
-			interests: []
+			interests: [],
+			genotp: '',
+			mailbtn: 'Send OTP',
+			otp: '',
+			otpbtn: 'Verify OTP'
 		};
 		component.getInstance().setState({
 			zipCodes: [{
@@ -451,7 +467,7 @@ describe('registerUserComponent', () => {
 				value: 'test'
 			}]
 		});
-		expect(component.root.findAllByType('input')[3].props.className).toEqual('error');
+		expect(component.root.findAllByType('input')[4].props.className).toEqual('error');
 	});
 
 	it('state updates when cities value changes', () => {
@@ -504,7 +520,7 @@ describe('registerUserComponent', () => {
 
 	it('renders input when loading is false', (done) => {
 		const component = renderer.create(<RegisterUser onSubmitRegister={() => {}} apiStatus={true}/>);
-		component.root.findAllByType('input')[9].props.onClick().then((val) => {
+		component.root.findAllByType('input')[10].props.onClick().then((val) => {
 			expect(val).toEqual(false);
 			done();
 		}).catch((err) => {
@@ -524,11 +540,12 @@ describe('registerUserComponent', () => {
 		const component = renderer.create(<RegisterUser onSubmitRegister={() => {}} apiStatus={true}/>);
 		expect(component.root.findAllByType('img')[0].props.src).toEqual('signup-name.png');
 		expect(component.root.findAllByType('img')[1].props.src).toEqual('signup-email.png');
-		expect(component.root.findAllByType('img')[2].props.src).toEqual('signup-pass.png');
-		expect(component.root.findAllByType('img')[3].props.src).toEqual('signup-repass.png');
-		expect(component.root.findAllByType('img')[4].props.src).toEqual('signup-city.png');
-		expect(component.root.findAllByType('img')[5].props.src).toEqual('signup-zip.png');
-		expect(component.root.findAllByType('img')[6].props.src).toEqual('signup-groceries.png');
-		expect(component.root.findAllByType('img')[7].props.src).toEqual('signup-image.png');
+		expect(component.root.findAllByType('img')[2].props.src).toEqual('OTP-email.png');
+		expect(component.root.findAllByType('img')[3].props.src).toEqual('signup-pass.png');
+		expect(component.root.findAllByType('img')[4].props.src).toEqual('signup-repass.png');
+		expect(component.root.findAllByType('img')[5].props.src).toEqual('signup-city.png');
+		expect(component.root.findAllByType('img')[6].props.src).toEqual('signup-zip.png');
+		expect(component.root.findAllByType('img')[7].props.src).toEqual('signup-groceries.png');
+		expect(component.root.findAllByType('img')[8].props.src).toEqual('signup-image.png');
 	});
 });

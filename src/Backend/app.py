@@ -34,7 +34,7 @@ empty()  --  empty function that only returns a static string
     Output:
     Response returns a success, message
 
------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------
 '''
 # required imports
 from werkzeug.exceptions import HTTPException
@@ -42,10 +42,14 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import json
 from src.Backend.utils import *
+import os
+import time
+
 
 # Flask application configuration
 app = Flask(__name__)
 CORS(app)
+UPLOAD_FOLDER = "src/Backend/images/"
 
 #### error handlers ####
 # http exceptions handler
@@ -140,6 +144,42 @@ def home():
     return jsonify({"status": 200, "data": {}, "message": ""})
 
 
+@app.route('/uploadimage', methods=['POST', 'GET', 'OPTIONS'])
+def upload_image():
+    """
+    Method used to upload an image to given folder.\n
+    Response is a json which contains:\n
+    1) Status - This can take 3 values = (200 : Perfect response, 405 : Database Error, 400 : Failure from client side ).\n
+    2) Data - The filename of the saved image.\n
+    3) Message - A message assoicated with the status.
+
+    Parameters
+    ----------
+    image : FileStorage
+        The image to be uploaded to the given upload folder. 
+
+    Returns
+    ----------
+    json
+        Returns a json containing the status, data which contains interested items for the user, message in accordance with the status.
+    """
+
+    if request.method == 'POST':
+        if not os.path.isdir(UPLOAD_FOLDER):
+            os.mkdir(UPLOAD_FOLDER)
+
+        img = request.files['image']
+        file_name = img.filename
+        if UPLOAD_FOLDER not in file_name:
+            file_name = time.strftime("%Y%m%d-%H%M%S") + '_' + file_name
+            file_name = os.path.join(UPLOAD_FOLDER, file_name)
+        img.save(file_name)
+
+        return jsonify({"status": 200, "data": {"imgName": file_name}, "message": ""})
+
+    return jsonify({"status": 200, "data": {}, "message": ""})
+
+
 @app.route('/additem', methods=['POST', 'GET', 'OPTIONS'])
 def additem():
     """
@@ -164,7 +204,7 @@ def additem():
         data = json.loads(request.data)
 
         status, msg = insert_item(
-            data['item_name'], data['quantity'], data['description'], data['zipcode'], data['city'], data['donor_id'], data['category'])
+            data['item_name'], data['quantity'], data['description'], data['zipcode'], data['city'], data['donor_id'], data['category'], data['img_url'])
 
         if status:
             return jsonify({"status": 200, "data": {}, "message": msg})
@@ -463,6 +503,65 @@ def updateprofile():
             return jsonify({"status": 400, "data": {}, "message": msg})
 
     return jsonify({"status": 200, "data": {}, "message": ""})
+
+
+@app.route('/item', methods=['GET', 'OPTIONS'])
+def getItem():
+    """
+    Gets the item details.\n
+    Response is a json which contains:\n
+    1) Status - This can take 3 values = (200 : Perfect response, 405 : Database Error, 400 : Failure from client side ).\n
+    2) Data - Associated data with the operation.\n
+    3) Message - A message assoicated with the status.
+
+    Parameters
+    ----------
+    id : int
+        ID of the item.
+
+    Returns
+    ----------
+    json
+        Returns a json containing the status, data which contains user's information, message in accordance with the status.
+    """
+
+    if request.method == 'GET':
+        id = request.args.get('id')
+        if (id):
+            itemDetail = getItemByID(id)
+            if (len(itemDetail) == 0):
+                return jsonify({"status": 400, "data": {}, "message": "Database Error"})
+            else:
+                return jsonify({"status": 200, "data": itemDetail, "message": "Item gotten succesfully"})
+
+    return jsonify({"status": 200, "data": {}, "message": ""})
+
+
+@app.route('/getOTP', methods=['POST'])
+def getOTP():
+	"""
+    Sending a mail containing the automatically generated OTP.\n
+    Response is a json which contains:\n
+    1) Status - This can take 3 values = (200 : Perfect response, 405 : Database Error, 400 : Failure from client side, 500:the server encountered an unexpected condition that prevented it from fulfilling the request ).\n
+    2) Data - Associated data with the operation, here no data as we expect no response.\n
+    3) Message - A message assoicated with the status.
+
+    Parameters
+    ----------
+    data : json
+        Information about the generated OTP along with the mail ID of the yet to be verified user.
+
+    Returns
+    ----------
+    json
+        Returns a json containing the status, data(No data associated with this function, hence the data is empty), message in accordance with the status.
+    """
+	data=request.get_json()
+	otp = data['otp']
+	mail = data['mail']
+	status, msg = sendmail(mail, otp)
+	status = 200 if status else 400
+	return jsonify({"status": status, "data": {}, "message": msg})
 
 
 if __name__ == '__main__':

@@ -47,7 +47,8 @@ CREATE TABLE `items` (
   `zipcode` varchar(20) NOT NULL,
   `city` varchar(1000) NOT NULL,
   `donor_id` int(11) NOT NULL,
-  `category` varchar(1000) NOT NULL
+  `category` varchar(1000) NOT NULL,
+  `img_url` varchar(1000)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --

@@ -1,12 +1,14 @@
+import os.path
 import unittest
 from unittest.mock import patch
 import json
 from urllib import response
 
-from src.Backend.app import app
+from src.Backend.app import app, UPLOAD_FOLDER
 
 
 class TestApp(unittest.TestCase):
+
     def test_register_get(self):
         tester = app.test_client(self)
         response = tester.get("/register")
@@ -47,6 +49,12 @@ class TestApp(unittest.TestCase):
         tester = app.test_client(self)
         response = tester.get("/")
         expected = {"status": 200, "data": {}, "message": "Backend working"}
+        assert expected == json.loads(response.get_data(as_text=True))
+
+    def test_getitem_get(self):
+        tester = app.test_client(self)
+        response = tester.get("/item")
+        expected = {'data': {}, 'message': '', 'status': 200}
         assert expected == json.loads(response.get_data(as_text=True))
 
     def test_updateprofile_put(self):
@@ -181,7 +189,7 @@ class TestApp(unittest.TestCase):
     def test_additem(self):
         tester = app.test_client(self)
         inpData = {"item_name": "Rice", "quantity": 1, "description": "Rice",
-                   "zipcode": "27605", "city": "Raleigh", "donor_id": 3, "category": "Food"}
+                   "zipcode": "27605", "city": "Raleigh", "donor_id": 3, "category": "Food", "img_url": "test.png"}
         response = tester.post("/additem", data=json.dumps(inpData),
                                headers={'content-type': 'application/json'})
 
@@ -206,3 +214,14 @@ class TestApp(unittest.TestCase):
         assert expected['status'] == response.json['status']
         assert expected['data'] in response.json['data']
         assert expected['message'] == response.json['message']
+
+    def test_upload_image(self):
+        tester = app.test_client(self)
+        img_path = os.path.join(UPLOAD_FOLDER, 'test.png')
+        with open(img_path, 'rb') as fp:
+            response = tester.post("/uploadimage", data={"image": fp})
+
+        assert response.status_code == response.json['status'] == 200
+        assert response.json['message'] == ""
+        assert img_path in response.json['data']['imgName']
+

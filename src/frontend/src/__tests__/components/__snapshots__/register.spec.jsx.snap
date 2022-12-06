@@ -57,6 +57,39 @@ exports[`registerUserComponent renders without crashing 1`] = `
               value=""
             />
           </div>
+          <div>
+            <button
+              className="sc-bcXHqe hdXlMb"
+              onClick={[Function]}
+            >
+              Send OTP
+            </button>
+          </div>
+          <div
+            className="form-group"
+          >
+            <img
+              alt="OTP for the email"
+              src="OTP-email.png"
+            />
+            <input
+              id="otp"
+              name="otp"
+              onChange={[Function]}
+              placeholder="Please enter the received OTP"
+              required={true}
+              type="text"
+              value=""
+            />
+          </div>
+          <div>
+            <button
+              className="sc-bcXHqe hdXlMb"
+              onClick={[Function]}
+            >
+              Verify OTP
+            </button>
+          </div>
           <div
             className="form-group"
           >
