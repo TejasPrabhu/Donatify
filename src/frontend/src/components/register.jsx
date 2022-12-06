@@ -4,7 +4,7 @@ import makeAnimated from 'react-select/animated';
 import { WithContext as ReactTags } from 'react-tag-input';
 import { Spinner } from 'reactstrap';
 import styled from 'styled-components';
-import emailjs from 'emailjs-com';
+// import emailjs from 'emailjs-com';
 import { json } from 'react-router-dom';
 
 /**
