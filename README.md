@@ -197,16 +197,25 @@ Accept a donation:
 ## Support
 We do our best to answer all tickets in a timely manner, but sometimes we accumulate a backlog and may take awhile to respond. Please be patient—we will get back to you as soon as we can! 
 Please do contact any of us:
-* Akash Gupta(agupta57@ncsu.edu)
-* Arun Srinivasan P(apartha4@ncsu.edu)
-* Nagaraj Madamshetti(nmadams@ncsu.edu)
-* Nitesh Mishra(nmishra4@ncsu.edu)
-* Sumit Singh(ssingh57@ncsu.edu)
+* Kartik Rawool(khrawool@ncsu.edu)
+* Naveen Jayanna(njayann@ncsu.edu)
+* Samarth Purushothaman(spurush@ncsu.edu)
+* Tejas Prabhu(tprabhu2@ncsu.edu)
+* Shubham Loya(ssloya@ncsu.edu)
 
 ## License
-* We are using [MIT license](https://github.com/agupta15k/ncsu_se_fall22_22_pr_1/blob/main/LICENSE.md)
-* Copyright (c) 2022 Group 22
+* We are using [MIT license](https://github.com/TejasPrabhu/Donatify/blob/main/LICENSE.md)
+* Copyright (c) 2022 Group 45
 
 ## Contributors ✨
 
-Thanks goes to [these](https://github.com/agupta15k/ncsu_se_fall22_22_pr_1/graphs/contributors) wonderful people.
+Thanks goes to these wonderful people.
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/kartikrawool"><img src="https://avatars.githubusercontent.com/u/55804665?v=4" width="100px;" alt=""/><br/><sub><b>Kartik Rawool</b></sub></a></td>
+    <td align="center"><a href="https://github.com/Naveen-Jayanna"><img src="https://avatars.githubusercontent.com/u/52947925?v=4" width="100px;" alt=""/><br/><sub><b>Naveen Jayanna</b></sub></a></td>
+    <td align="center"><a href="https://github.com/samarth-p"><img src="https://avatars.githubusercontent.com/u/42717178?v=4" width="100px;" alt=""/><br/><sub><b>Samarth Purushothaman</b></sub></a></td>
+    <td align="center"><a href="https://github.com/TejasPrabhu"><img src="https://avatars.githubusercontent.com/u/100992314?v=4" width="100px;" alt=""/><br/><sub><b>Tejas Prabhu</b></sub></a></td>
+    <td align="center"><a href="https://github.com/crmgogo"><img src="https://avatars.githubusercontent.com/u/55990000?v=4" width="100px;" alt=""/><br/><sub><b>Shubham Loya</b></sub></a></td>
+  </tr>
+</table>
