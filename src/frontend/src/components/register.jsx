@@ -252,19 +252,19 @@ class RegisterUser extends React.Component {
 		cursor: pointer;
 		`;
 		return (
-			<div className='signup'>
-				<div className="container">
+			<div className='signup' style={{ backgroundRepeat: 'repeat-y' }}>
+				<div className="container" style={{ paddingTop: -50 }}>
 					<div className="signup-content">
 						<div className="signup-form">
 							<h2 className="form-title">Sign up</h2>
 							<form className="register-form" id="register-form">
 								<div className="form-group">
-									<img src="signup-name.png" alt='signup name'/>
-									<input autoFocus type="text" name="name" id="name" placeholder="Your Name" value={this.state.name} onChange={this.handleInput} required/>
+									<img src="signup-name.png" alt='signup name' />
+									<input autoFocus type="text" name="name" id="name" placeholder="Your Name" value={this.state.name} onChange={this.handleInput} required />
 								</div>
 								<div className="form-group">
-									<img src="signup-email.png" alt='signup enail'/>
-									<input type="email" name="email" id="email" placeholder="Your Email" value={this.state.email} onChange={this.handleInput} required/>
+									<img src="signup-email.png" alt='signup enail' />
+									<input type="email" name="email" id="email" placeholder="Your Email" value={this.state.email} onChange={this.handleInput} required />
 								</div>
 								<div><Button onClick={this.sendOTP}>
 									{this.state.mailbtn}
@@ -277,15 +277,15 @@ class RegisterUser extends React.Component {
 									{this.state.otpbtn}
 								</Button></div>
 								<div className="form-group">
-									<img src="signup-pass.png" alt='signup password'/>
-									<input type="password" name="pass" id="pass" placeholder="Password" value={this.state.pass} onChange={this.handleInput} required/>
+									<img src="signup-pass.png" alt='signup password' />
+									<input type="password" name="pass" id="pass" placeholder="Password" value={this.state.pass} onChange={this.handleInput} required />
 								</div>
 								<div className="form-group">
-									<img src="signup-repass.png" alt='signup repeat password'/>
-									<input type="password" className={this.state.pass !== this.state.rePass ? 'error' : ''} name="rePass" id="rePass" placeholder="Repeat your password" value={this.state.rePass} onChange={this.handleInput} required/>
+									<img src="signup-repass.png" alt='signup repeat password' />
+									<input type="password" className={this.state.pass !== this.state.rePass ? 'error' : ''} name="rePass" id="rePass" placeholder="Repeat your password" value={this.state.rePass} onChange={this.handleInput} required />
 								</div>
-								<div className="form-group" style={{overflow: 'unset'}}>
-									<img src="signup-city.png" alt='signup city'/>
+								<div className="form-group" style={{ overflow: 'unset' }}>
+									<img src="signup-city.png" alt='signup city' />
 									<Select
 										closeMenuOnSelect={false}
 										components={animatedComponents}
@@ -295,11 +295,11 @@ class RegisterUser extends React.Component {
 										maxMenuHeight={200}
 										menuPlacement='top'
 										name='city'
-										onChange={(event) => this.handleInput({values: event, name: 'cities'})}
+										onChange={(event) => this.handleInput({ values: event, name: 'cities' })}
 									/>
 								</div>
 								<div className="form-group">
-									<img src="signup-zip.png" alt='signup zip'/>
+									<img src="signup-zip.png" alt='signup zip' />
 									<ReactTags
 										name='zip'
 										id='zip'
@@ -311,8 +311,8 @@ class RegisterUser extends React.Component {
 										autofocus={false}
 									/>
 								</div>
-								<div className="form-group" style={{overflow: 'unset'}}>
-									<img src="signup-groceries.png" alt='signup items'/>
+								<div className="form-group" style={{ overflow: 'unset' }}>
+									<img src="signup-groceries.png" alt='signup items' />
 									<Select
 										closeMenuOnSelect={false}
 										components={animatedComponents}
@@ -322,7 +322,7 @@ class RegisterUser extends React.Component {
 										maxMenuHeight={200}
 										menuPlacement='top'
 										name='interests'
-										onChange={(event) => this.handleInput({values: event, name: 'interests'})}
+										onChange={(event) => this.handleInput({ values: event, name: 'interests' })}
 									/>
 								</div>
 								{/* <div className="form-group">
@@ -330,12 +330,12 @@ class RegisterUser extends React.Component {
 									<label for="agree-term" className="label-agree-term"><span><span></span></span>I agree all statements in <a className="term-service">Terms of service</a></label>
 								</div> */}
 								<div className="form-group form-button">
-									{this.state.loading ? <Spinner /> : <input type="submit" name="signup" id="signup" className="form-submit" value="Register" onClick={this.handleSubmit}/>}
+									{this.state.loading ? <Spinner /> : <input type="submit" name="signup" id="signup" className="form-submit" value="Register" onClick={this.handleSubmit} />}
 								</div>
 							</form>
 						</div>
 						<div className="signup-image">
-							<figure><img src="signup-image.png" alt="sign up"/></figure>
+							<figure><img src="signup-image.png" alt="sign up" /></figure>
 							<a href="" onClick={() => this.redirectToPath('/')} className="signup-image-link">I am already a member</a>
 						</div>
 					</div>
