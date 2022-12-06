@@ -100,7 +100,12 @@ class Donate extends React.Component {
 			alert('Missing value for image. Please upload an image.');
 			return false;
 		}
-		const res = await this.onFileUpload();
+		if (this.state.selectedFile != 'test') {
+			const res = await this.onFileUpload();
+			this.setState({
+				imgName: res.data['imgName']
+			});
+		}
 		if (this.props.props) {
 			const apiInput = {
 				itemName: this.state.itemName,
@@ -110,7 +115,7 @@ class Donate extends React.Component {
 				itemCity: this.state.itemCity.value,
 				itemDonorId: this.state.itemDonorId,
 				itemCategory: this.state.itemCategory.value,
-				imgName: res.data['imgName']
+				imgName: this.state.imgName
 			};
 			this.setState({
 				loading: true
