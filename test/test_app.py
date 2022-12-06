@@ -8,6 +8,7 @@ from src.Backend.app import app, UPLOAD_FOLDER
 
 
 class TestApp(unittest.TestCase):
+
     def test_register_get(self):
         tester = app.test_client(self)
         response = tester.get("/register")
@@ -48,6 +49,12 @@ class TestApp(unittest.TestCase):
         tester = app.test_client(self)
         response = tester.get("/")
         expected = {"status": 200, "data": {}, "message": "Backend working"}
+        assert expected == json.loads(response.get_data(as_text=True))
+
+    def test_getitem_get(self):
+        tester = app.test_client(self)
+        response = tester.get("/item")
+        expected = {'data': {}, 'message': '', 'status': 200}
         assert expected == json.loads(response.get_data(as_text=True))
 
     @patch('src.Backend.app.updateProfile')

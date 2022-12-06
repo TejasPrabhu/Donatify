@@ -2,7 +2,7 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import LeftOver from './leftOver';
 import './index.css';
-import 'antd/dist/antd.css';
+import 'antd/dist/antd.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 /**

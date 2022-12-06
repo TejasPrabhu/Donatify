@@ -34,7 +34,7 @@ empty()  --  empty function that only returns a static string
     Output:
     Response returns a success, message
 
------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------
 '''
 # required imports
 from werkzeug.exceptions import HTTPException
@@ -504,6 +504,36 @@ def updateprofile():
 
     return jsonify({"status": 200, "data": {}, "message": ""})
 
+@app.route('/item', methods=['GET', 'OPTIONS'])
+def getItem():
+    """
+    Gets the item details.\n
+    Response is a json which contains:\n
+    1) Status - This can take 3 values = (200 : Perfect response, 405 : Database Error, 400 : Failure from client side ).\n
+    2) Data - Associated data with the operation.\n
+    3) Message - A message assoicated with the status.
+
+    Parameters
+    ----------
+    id : int
+        ID of the item.
+
+    Returns
+    ----------
+    json
+        Returns a json containing the status, data which contains user's information, message in accordance with the status.
+    """
+
+    if request.method == 'GET':
+        id = request.args.get('id')
+        if (id):
+            itemDetail = getItemByID(id)
+            if (len(itemDetail) == 0):
+                return jsonify({"status": 400, "data": {}, "message": "Database Error"})
+            else:
+                return jsonify({"status": 200, "data": itemDetail, "message": "Item gotten succesfully"})
+
+    return jsonify({"status": 200, "data": {}, "message": ""})
 
 if __name__ == '__main__':
     app.run(debug=True, host='localhost', port=5001)

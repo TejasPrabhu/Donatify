@@ -14,6 +14,7 @@ import Profile from './profile';
 import History from './history';
 import Donate from './donate';
 import MarketPlace from './marketPlace';
+import ItemDetail from './itemDetail';
 
 const { Header, Sider, Content } = Layout;
 
@@ -51,7 +52,7 @@ class Home extends Component {
 			if (url.pathname === '/home') {
 				this.redirectToPath('/home/history');
 			} else {
-				const paths = ['profile', 'history', 'donate','marketPlace'];
+				const paths = ['profile', 'history', 'donate', 'marketPlace'];
 				if (paths.includes(pathWithoutHome)) {
 					this.setState({
 						content: pathWithoutHome
@@ -159,13 +160,14 @@ class Home extends Component {
 						style={{
 							margin: '24px 16px',
 							padding: 24,
-							minHeight: 280,
+							minHeight: 400,
 						}}
 					>
-						{(this.state.content === 'history' || this.props.tab === 'history') && <History props={this.props}/>}
-						{(this.state.content === 'donate' || this.props.tab === 'donate') && <Donate props={this.props}/>}
-						{(this.state.content === 'profile' || this.props.tab === 'profile') && <Profile props={this.props}/>}
-						{(this.state.content === 'marketPlace' || this.props.tab === 'marketPlace') && <MarketPlace props={this.props}/>}
+						{(this.state.content === 'history' || this.props.tab === 'history') && <History props={this.props} />}
+						{(this.state.content === 'donate' || this.props.tab === 'donate') && <Donate props={this.props} />}
+						{(this.state.content === 'profile' || this.props.tab === 'profile') && <Profile props={this.props} />}
+						{(this.state.content === 'marketPlace' || this.props.tab === 'marketPlace') && <MarketPlace props={this.props} />}
+						{(this.state.content === 'itemDetail' || this.props.tab === 'itemDetail') && <ItemDetail props={this.props} />}
 					</Content>
 				</Layout>
 			</Layout>

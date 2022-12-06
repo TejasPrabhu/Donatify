@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import getRecipientItemsAPI from '../API/getRecipientItems';
 import { Card, Avatar, Modal, Button } from 'antd';
 const { Meta } = Card;
+import Select from 'react-select';
+import makeAnimated from 'react-select/animated';
+//import { Link } from 'react-router-dom';
 // const recieveItemAPI = require('../API/recieveItem');
 
 /**
@@ -17,7 +20,7 @@ class MarketPlace extends Component {
 		super(props);
 		this.state = {
 			recipientItems: [],
-			history: 'All',
+			cityChoice: 'All',
 			isModalOpen: false,
 			showAlert: false,
 		};
@@ -181,14 +184,17 @@ class MarketPlace extends Component {
 	};
 
 	/**
-	 * Update state with type of history required
+	 * Update state with city choice
 	 * @param {Object} event onChange event for user input
 	 */
-	setHistory = (event) => {
-		console.log('radio', event);
+	setCity = (event) => {
+		let city = event.value;
+		console.log(city);
 		this.setState({
-			history: event.target.value
-		});
+			cityChoice: city
+		}
+		);
+		//this.loadData;
 	};
 
 	/**
@@ -212,11 +218,36 @@ class MarketPlace extends Component {
 		// })
 	};
 
+	redirectToPath = (value) => {
+		const url = new URL(document.location.href);
+		document.location.href = `${url.origin}${value}`;
+	};
+
+
 	/**
 	 * Render receiving component
 	 * @returns {React.Component} Cards with available items
 	 */
 	render() {
+		const cities = [
+			{
+				label: 'Raleigh',
+				value: 'raleigh'
+			},
+			{
+				label: 'Cary',
+				value: 'cary'
+			},
+			{
+				label: 'Durham',
+				value: 'durham'
+			},
+			{
+				label: 'All',
+				value: 'All'
+			}
+		];
+		const animatedComponents = makeAnimated();
 		const gridStyle = {
 			width: '25%',
 			textAlign: 'center',
@@ -258,7 +289,7 @@ class MarketPlace extends Component {
 		};
 		return (
 			<>
-				{this.state.isModalOpen ? (<Modal title="Basic Modal" open={this.state.isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+				{this.state.isModalOpen ? (<Modal title={this.state.items.itemName} open={this.state.isModalOpen} onOk={handleOk} onCancel={handleCancel}>
 					<p>Item Name: {this.state.items.itemName}</p>
 					<p>Item Quantity: {this.state.items.itemQuantity}</p>
 					<p>Item Description: {this.state.items.itemDescription}</p>
@@ -266,13 +297,25 @@ class MarketPlace extends Component {
 					<p>Item City: {this.state.items.itemCity}</p>
 					<p>Item Category: {this.state.items.itemCategory}</p>
 				</Modal>) : (<></>)}
-				<Card title="market place">
-					{this.state.recipientItems.length > 0 ? (
+				<Select
+					closeMenuOnSelect={true}
+					components={animatedComponents}
+					options={cities}
+					isMulti={false}
+					placeholder={this.state.cityChoice}
+					defaultValue={this.state.cityChoice}
+					maxMenuHeight={200}
+					menuPlacement='top'
+					name='city'
+					onChange={this.setCity}
+				/>
+				<Card title="Market Place">
+					{(this.state.recipientItems.length > 0 && this.state.cityChoice === 'All') ? (
 						this.state.recipientItems.map((d) => (
 							<Card.Grid style={gridStyle}>
 								<Card
 									style={{
-										width: 100,
+										width: '100%',
 									}}
 									cover={
 										<img
@@ -289,10 +332,16 @@ class MarketPlace extends Component {
 										title={d.itemName}
 										description={d.itemDescription}
 									/>
-									<Button type="primary" onClick={() => showModal(d)}>
+									<Button type="primary" onClick={() => showModal(d)} style={{ margin: 6, marginLeft: 20 }}>
 										View Details
 									</Button>
-									<Button type="primary" onClick={() => this.showDonorContact(d.donorEmail)}>
+									{/* <Link to={`/home/itemDetail/${d.itemId}`}>
+										Open
+									</Link>
+									<Button onClick={() => this.redirectToPath(`/home/itemDetail/${d.itemId}`)}>
+										Open
+									</Button> */}
+									<Button type="primary" onClick={() => this.showDonorContact(d.donorEmail)} style={{ marginBottom: 10, marginLeft: 20 }}>
 										Contact Donor
 									</Button>
 									{/* {this.state.showAlert ? (<Alert
@@ -304,6 +353,51 @@ class MarketPlace extends Component {
 
 
 								</Card>
+							</Card.Grid>
+						))
+					) : (<></>)}
+					{(this.state.recipientItems.length > 0 && this.state.cityChoice !== 'All') ? (
+						this.state.recipientItems.map((d) => (
+							<Card.Grid style={gridStyle}>
+								{(d.itemCity === this.state.cityChoice) ? (
+									<Card
+										style={{
+											width: '100%',
+										}}
+										cover={
+											<img
+												alt="example"
+												src="https://picsum.photos/300/200"
+											/>
+										}
+									// actions={[
+									//   <FolderViewOutlined key="view" />
+									// ]}
+									>
+										<Meta
+											avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
+											title={d.itemName}
+											description={d.itemDescription}
+										/>
+										<Button type="primary" onClick={() => showModal(d)} style={{ margin: 6, marginLeft: 20 }}>
+											View Details
+										</Button>
+										{/* <Link to={`/home/itemDetail/${d.ItemId}`}>
+											Open
+										</Link> */}
+										<Button type="primary" onClick={() => this.showDonorContact(d.donorEmail)} style={{ marginBottom: 10, marginLeft: 20 }}>
+											Contact Donor
+										</Button>
+										{/* {this.state.showAlert ? (<Alert
+											message="Donor Details"
+											description={`email: ${d.donorEmail}`}
+											type="info"
+											showIcon
+										/>) : (<div></div>)} */}
+
+
+									</Card>
+								) : (<></>)}
 							</Card.Grid>
 						))
 					) : (<></>)}
