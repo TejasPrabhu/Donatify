@@ -1,11 +1,11 @@
-# [Donatify](https://github.com/TejasPrabhu/Donatify)
+# [Donatify](https://tejasprabhu.github.io/Donatify/)
 
-[![GitHub](https://img.shields.io/github/license/agupta15k/ncsu_se_fall22_22_pr_1?color=green&label=license&logo=MIT)](https://github.com/agupta15k/ncsu_se_fall22_22_pr_1/blob/main/LICENSE.md)
-[![GitHub issues](https://img.shields.io/github/issues-raw/agupta15k/ncsu_se_fall22_22_pr_1)](https://github.com/agupta15k/ncsu_se_fall22_22_pr_1/issues)
-[![Github closed issues](https://img.shields.io/github/issues-closed-raw/agupta15k/ncsu_se_fall22_22_pr_1)](https://github.com/agupta15k/ncsu_se_fall22_22_pr_1/issues?q=is%3Aissue+is%3Aclosed)
-[![Github pull requests](https://img.shields.io/github/issues-pr/agupta15k/ncsu_se_fall22_22_pr_1?color=red)](https://github.com/agupta15k/ncsu_se_fall22_22_pr_1/pulls)
-[![Github closed pull requests](https://img.shields.io/github/issues-pr-closed/agupta15k/ncsu_se_fall22_22_pr_1?color=blue)](https://github.com/agupta15k/ncsu_se_fall22_22_pr_1/pulls?q=is%3Apr+is%3Aclosed)
-[![Github all contributors](https://img.shields.io/github/contributors/agupta15k/ncsu_se_fall22_22_pr_1?color=green)](https://github.com/agupta15k/ncsu_se_fall22_22_pr_1/graphs/contributors)
+[![GitHub](https://img.shields.io/github/license/TejasPrabhu/Donatify)](https://github.com/TejasPrabhu/Donatify/blob/main/LICENSE.md)
+[![GitHub issues](https://img.shields.io/github/issues-raw/TejasPrabhu/Donatify))](https://github.com/TejasPrabhu/Donatify/issues)
+[![GitHub closed issues](https://img.shields.io/github/issues-closed-raw/TejasPrabhu/Donatify)](https://github.com/TejasPrabhu/Donatify/issues?q=is%3Aissue+is%3Aclosed)
+[![GitHub pull requests](https://img.shields.io/github/issues-pr/TejasPrabhu/Donatify)](https://github.com/TejasPrabhu/Donatify/pulls)
+[![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed-raw/TejasPrabhu/Donatify)](https://github.com/TejasPrabhu/Donatify/pulls?q=is%3Apr+is%3Aclosed)
+[![GitHub contributors](https://img.shields.io/github/contributors/TejasPrabhu/Donatify)](https://github.com/TejasPrabhu/Donatify/graphs/contributors)
 [![DOI](https://zenodo.org/badge/557621983.svg)](https://zenodo.org/badge/latestdoi/557621983)
 [![codecov](https://codecov.io/gh/TejasPrabhu/Donatify/branch/main/graph/badge.svg?token=y7kqfbG9mX)](https://codecov.io/gh/TejasPrabhu/Donatify)
 
