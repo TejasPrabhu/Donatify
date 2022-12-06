@@ -486,8 +486,9 @@ def getOTP():
 	data=request.get_json()
 	otp = data['otp']
 	mail = data['mail']
-	sendmail(mail, otp)
-	return jsonify({"status": 200, "data": {}, "message": "successfully sent the mail"})
+	status, msg = sendmail(mail, otp)
+	status = 200 if status else 400
+	return jsonify({"status": status, "data": {}, "message": msg})
 
 
 
