@@ -1,12 +1,14 @@
+import os.path
 import unittest
 from unittest.mock import patch
 import json
 from urllib import response
 
-from src.Backend.app import app
+from src.Backend.app import app, UPLOAD_FOLDER
 
 
 class TestApp(unittest.TestCase):
+
     def test_register_get(self):
         tester = app.test_client(self)
         response = tester.get("/register")
@@ -49,32 +51,34 @@ class TestApp(unittest.TestCase):
         expected = {"status": 200, "data": {}, "message": "Backend working"}
         assert expected == json.loads(response.get_data(as_text=True))
 
-    @patch('src.Backend.app.updateProfile')
-    def test_updateprofile_put(self, mock_updateProfile):
+    def test_getitem_get(self):
         tester = app.test_client(self)
-        mock_updateProfile.return_value = True, "Record updated successfully into item table"
+        response = tester.get("/item")
+        expected = {'data': {}, 'message': '', 'status': 200}
+        assert expected == json.loads(response.get_data(as_text=True))
+
+    def test_updateprofile_put(self):
+        tester = app.test_client(self)
         inpData = {"name": "Sam", "email": "sam@gmail.com", "city": [
-            "Raleigh", "Durham"], "zipcode": ["27606"], "interests": ["Food"], "ID": 3}
+            "Raleigh", "Durham"], "zipCodes": ["27606"], "interests": ["Food"], "id": 2}
         response = tester.put("/updateprofile", data=json.dumps(inpData),
                               headers={'content-type': 'application/json'})
         expected = {"status": 200, "data": {},
                     "message": "Record updated successfully into item table"}
         assert expected == json.loads(response.get_data(as_text=True))
 
-    @patch('src.Backend.app.getUserProfileByID')
-    def test_getProfile_get(self, mock_getUserProfileByID):
+    def test_getProfile_get(self):
         tester = app.test_client(self)
-        mock_getUserProfileByID.return_value = {"name": "Sam", "email": "sam@gmail.com", "city": [
-            "Raleigh", "Durham"], "zipcode": ["27606"], "interests": ["Food"], "ID": 3}
-        response = tester.get('/profile?id=3')
-        expected = {"status": 200, "data": {"name": "Sam", "email": "sam@gmail.com", "city": [
-            "Raleigh", "Durham"], "zipcode": ["27606"], "interests": ["Food"], "ID": 3}, "message": "Profile gotten succesfully"}
+        response = tester.get('/profile?id=1')
+        expected = {"status": 200,
+                    "data": {'city': 'Raleigh', 'email': 'abc@gmail.com',
+                             'interests': '["food", "furniture", "appliance", "electronics"]',
+                             'name': 'ABC', 'password': '1234567', 'zipcode': '27606'},
+                    "message": "Profile gotten succesfully"}
         assert expected == json.loads(response.get_data(as_text=True))
 
-    @patch('src.Backend.app.loginCheck')
-    def test_login_post_1(self, mock_loginCheck):
+    def test_login_post_1(self):
         tester = app.test_client(self)
-        mock_loginCheck.return_value = False, 1
         inpData = {"email": "sam@gmail.com", "password": "sam"}
         response = tester.post("/login", data=json.dumps(inpData),
                                headers={'content-type': 'application/json'})
@@ -82,18 +86,15 @@ class TestApp(unittest.TestCase):
                     "message": "Incorrect email/Password"}
         assert expected == json.loads(response.get_data(as_text=True))
 
-    @patch('src.Backend.app.getUserProfileByEmail')
-    @patch('src.Backend.app.loginCheck')
-    def test_login_post_2(self, mock_loginCheck, mock_getUserProfileByEmail):
+    def test_login_post_2(self):
         tester = app.test_client(self)
-        mock_loginCheck.return_value = True, 1
-        mock_getUserProfileByEmail.return_value = {"name": "Sam", "email": "sam@gmail.com", "city": [
-            "Raleigh", "Durham"], "zipcode": ["27606"], "interests": ["Food"], "ID": 3}
-        inpData = {"email": "sam@gmail.com", "password": "sam"}
+        inpData = {"email": "abc@gmail.com", "password": "1234567"}
         response = tester.post("/login", data=json.dumps(inpData),
                                headers={'content-type': 'application/json'})
-        expected = {"status": 200, "data": {"name": "Sam", "email": "sam@gmail.com", "city": [
-            "Raleigh", "Durham"], "zipcode": ["27606"], "interests": ["Food"], "ID": 3}, "message": "Logged in Succesfully"}
+        expected = {"status": 200,
+                    "data": {"name": "ABC", "email": "abc@gmail.com", "city": "Raleigh", "zipcode": "27606",
+                             "interests": '["food", "furniture", "appliance", "electronics"]', "ID": 1},
+                    "message": "Logged in Succesfully"}
         assert expected == json.loads(response.get_data(as_text=True))
 
     def test_register_post_1(self):
@@ -106,11 +107,9 @@ class TestApp(unittest.TestCase):
                     "message": "Passwords do not match"}
         assert expected == json.loads(response.get_data(as_text=True))
 
-    @patch('src.Backend.app.checkDuplicateEmail')
-    def test_register_post_2(self, mock_checkDuplicateEmail):
+    def test_register_post_2(self):
         tester = app.test_client(self)
-        mock_checkDuplicateEmail.return_value = True, 1
-        inpData = {"name": "Sam", "email": "sam@gmail.com", "city": [
+        inpData = {"name": "Sam", "email": "abc@gmail.com", "city": [
             "Raleigh", "Durham"], "zipcode": ["27606"], "interests": ["Food"], "ID": 3, "password": "sam", "repeatpassword": "sam"}
         response = tester.post("/register", data=json.dumps(inpData),
                                headers={'content-type': 'application/json'})
@@ -132,59 +131,53 @@ class TestApp(unittest.TestCase):
                     "message": "You have registered succesfully"}
         assert expected == json.loads(response.get_data(as_text=True))
 
-    @patch('src.Backend.app.getRecieverHistory')
-    def test_getReceiverInfo_1(self, mock_getRecieverHistory):
+    def test_getReceiverInfo_1(self):
         tester = app.test_client(self)
-        mock_getRecieverHistory.return_value = True, []
-        response = tester.get("/recipient/history?id=100")
+        response = tester.get("/recipient/history?id=1000000")
         expected = {"status": 200, "data": {}, "message": "No records found"}
         assert expected == json.loads(response.get_data(as_text=True))
 
-    @patch('src.Backend.app.getRecieverHistory')
-    def test_getReceiverInfo_2(self, mock_getRecieverHistory):
+    def test_getReceiverInfo_2(self):
         tester = app.test_client(self)
-        mock_getRecieverHistory.return_value = True, [{"item_name": "rice", "quantitiy": 2, "description": "Left over rice",
-                                                      "zipcode": "27606", "city": "Raleigh", "donor_name": "Henry", "category": "Food", "item_id": 2}]
-        response = tester.get("/recipient/history?id=3")
-        expected = {"status": 200, "data": [{"item_name": "rice", "quantitiy": 2, "description": "Left over rice",
-                                            "zipcode": "27606", "city": "Raleigh", "donor_name": "Henry", "category": "Food", "item_id": 2}],
+        response = tester.get("/recipient/history?id=2")
+        expected = {"status": 200,
+                    "data": {'itemId': 1, 'itemName': 'book', 'itemQuantity': 2, 'itemDescription': 'old books',
+                             'itemZipCode': '27606', 'itemCity': 'Raleigh', 'itemDonorId': 1, 'itemDonorName': 'ABC',
+                             'itemCategory': 'furniture'},
                     "message": "Donation History Records"}
-        assert expected == json.loads(response.get_data(as_text=True))
+        assert expected['status'] == response.json['status']
+        assert expected['data'] in response.json['data']
+        assert expected['message'] == response.json['message']
 
-    @patch('src.Backend.app.getDonorHistory')
-    def test_getDonorInfo_1(self, mock_getDonorHistory):
+    def test_getDonorInfo_1(self):
         tester = app.test_client(self)
-        mock_getDonorHistory.return_value = True, []
-        response = tester.get("/donor/history?id=100")
+        response = tester.get("/donor/history?id=1000000")
         expected = {"status": 200, "data": {}, "message": "No records found"}
         assert expected == json.loads(response.get_data(as_text=True))
 
-    @patch('src.Backend.app.getDonorHistory')
-    def test_getDonorInfo_2(self, mock_getDonorHistory):
+    def test_getDonorInfo_2(self):
         tester = app.test_client(self)
-        mock_getDonorHistory.return_value = True, [{"item_name": "rice", "quantitiy": 2, "description": "Left over rice",
-                                                   "zipcode": "27606", "city": "Raleigh", "donor_name": "Henry", "category": "Food", "item_id": 2}]
-        response = tester.get("/donor/history?id=3")
-        expected = {"status": 200, "data": [{"item_name": "rice", "quantitiy": 2, "description": "Left over rice",
-                                            "zipcode": "27606", "city": "Raleigh", "donor_name": "Henry", "category": "Food", "item_id": 2}],
+        response = tester.get("/donor/history?id=1")
+        expected = {"status": 200,
+                    "data": {'itemCategory': 'furniture', 'itemCity': 'Raleigh',
+                              'itemDescription': 'old books', 'itemDonorId': 1, 'itemId': 1, 'itemName': 'book',
+                              'itemQuantity': 2, 'itemZipCode': '27606'},
                     "message": "Donation History Records"}
-        assert expected == json.loads(response.get_data(as_text=True))
+        assert expected['status'] == response.json['status']
+        assert expected['data'] in response.json['data']
+        assert expected['message'] == response.json['message']
 
-    @patch('src.Backend.app.addDonation')
-    def test_add_Donation(self, mock_addDonation):
+    def test_add_Donation(self):
         tester = app.test_client(self)
-        mock_addDonation.return_value = True, "Record inserted successfully into donation table"
-        inpData = {"item_id": 3, "recipient_id": 3}
+        inpData = {"item_id": 1000, "recipient_id": 1000}
         response = tester.post("/addDonation", data=json.dumps(inpData),
                                headers={'content-type': 'application/json'})
         expected = {"status": 200, "data": {},
                     "message": "Record inserted successfully into donation table"}
         assert expected == json.loads(response.get_data(as_text=True))
 
-    @patch('src.Backend.app.update_item')
-    def test_updateitem(self, mock_updateitem):
+    def test_updateitem(self):
         tester = app.test_client(self)
-        mock_updateitem.return_value = True, "Record updated successfully into item table"
         inpData = {"item_name": "Rice", "quantity": 1, "description": "Rice",
                    "zipcode": "27605", "city": "Raleigh", "donor_id": 3, "category": "Food", "item_id": 2}
         response = tester.put("/updateitem", data=json.dumps(inpData),
@@ -193,12 +186,10 @@ class TestApp(unittest.TestCase):
                     "message": "Record updated successfully into item table"}
         assert expected == json.loads(response.get_data(as_text=True))
 
-    @patch('src.Backend.app.insert_item')
-    def test_additem(self, mock_insert_item):
+    def test_additem(self):
         tester = app.test_client(self)
         inpData = {"item_name": "Rice", "quantity": 1, "description": "Rice",
-                   "zipcode": "27605", "city": "Raleigh", "donor_id": 3, "category": "Food"}
-        mock_insert_item.return_value = True, "Record inserted successfully into item table"
+                   "zipcode": "27605", "city": "Raleigh", "donor_id": 3, "category": "Food", "img_url": "test.png"}
         response = tester.post("/additem", data=json.dumps(inpData),
                                headers={'content-type': 'application/json'})
 
@@ -206,21 +197,31 @@ class TestApp(unittest.TestCase):
                     "message": "Record inserted successfully into item table"}
         assert expected == json.loads(response.get_data(as_text=True))
 
-    @patch('src.Backend.app.get_items')
-    def test_home(self, mock_get_items):
+    def test_home(self):
         tester = app.test_client(self)
-        mock_get_items.return_value = True, []
-        response = tester.get("/items?id=2&page=1")
+        response = tester.get("/items?id=1&page=100")
         expected = {"status": 200, "data": {}, "message": "No more data"}
         assert expected == json.loads(response.get_data(as_text=True))
 
-    @patch('src.Backend.app.get_items')
-    def test_home_1(self, mock_get_items):
+    def test_home_1(self):
         tester = app.test_client(self)
-        mock_get_items.return_value = True, {"item_id": 1, "item_name": "Rice", "quantity": 1,
-                                             "description": "Left over rice", "zipcode": "27606", "city": "Raleigh", "donor_id": 2, "category": "Food"}
-        response = tester.get("/items?id=2&page=1")
-        expected = {"status": 200, "data": {"item_id": 1, "item_name": "Rice", "quantity": 1,
-                                            "description": "Left over rice", "zipcode": "27606", "city": "Raleigh", "donor_id": 2, "category": "Food"},
+        response = tester.get("/items?id=1&page=1")
+        expected = {"status": 200,
+                    "data": {'donorEmail': 'abc@gmail.com', 'itemCategory': 'furniture', 'itemCity': 'Raleigh',
+                             'itemDescription': 'old books', 'itemDonorId': 1, 'itemId': 1, 'itemName': 'book',
+                             'itemQuantity': 2, 'itemZipCode': '27606'},
                     "message": "Fetched records successfully"}
-        assert expected == json.loads(response.get_data(as_text=True))
+        assert expected['status'] == response.json['status']
+        assert expected['data'] in response.json['data']
+        assert expected['message'] == response.json['message']
+
+    def test_upload_image(self):
+        tester = app.test_client(self)
+        img_path = os.path.join(UPLOAD_FOLDER, 'test.png')
+        with open(img_path, 'rb') as fp:
+            response = tester.post("/uploadimage", data={"image": fp})
+
+        assert response.status_code == response.json['status'] == 200
+        assert response.json['message'] == ""
+        assert img_path in response.json['data']['imgName']
+

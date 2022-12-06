@@ -18,7 +18,9 @@ describe('donateComponent', () => {
 			itemCity: {},
 			itemDonorId: undefined,
 			itemCategory: {},
-			loading: false
+			loading: false,
+			selectedFile: null,
+			imgName: ''
 		};
 		const actualOutput = component.getInstance().state;
 		expect(expectedOutput).toEqual(actualOutput);
@@ -34,7 +36,9 @@ describe('donateComponent', () => {
 			itemCity: {},
 			itemDonorId: undefined,
 			itemCategory: {},
-			loading: false
+			loading: false,
+			selectedFile: null,
+			imgName: ''
 		};
 		const input = {
 			type: 'change',
@@ -61,7 +65,9 @@ describe('donateComponent', () => {
 			},
 			itemDonorId: undefined,
 			itemCategory: {},
-			loading: false
+			loading: false,
+			selectedFile: null,
+			imgName: ''
 		};
 		const input = {
 			name: 'itemCity',
@@ -182,7 +188,9 @@ describe('donateComponent', () => {
 			itemDescription: 'test',
 			itemZipCode: 'test',
 			itemCity: {test: 'test'},
-			itemCategory: {test: 'test'}
+			itemCategory: {test: 'test'},
+			selectedFile: 'test',
+			imgName: 'test'
 		});
 		component.getInstance().handleSubmit({preventDefault: () => {}}).then((val) => {
 			expect(val).toEqual(false);
@@ -207,7 +215,9 @@ describe('donateComponent', () => {
 			itemDescription: 'test',
 			itemZipCode: 'test',
 			itemCity: {test: 'test'},
-			itemCategory: {test: 'test'}
+			itemCategory: {test: 'test'},
+			selectedFile: 'test',
+			imgName: 'test'
 		});
 		component.getInstance().handleSubmit({preventDefault: () => {}}).then((val) => {
 			expect(val).toEqual(false);
@@ -230,7 +240,9 @@ describe('donateComponent', () => {
 			itemDescription: 'test',
 			itemZipCode: 'test',
 			itemCity: {label: 'test', value: 'test'},
-			itemCategory: {label: 'test', value: 'test'}
+			itemCategory: {label: 'test', value: 'test'},
+			selectedFile: 'test',
+			imgName: 'test'
 		};
 		const expectedOutput = {
 			itemName: 'test',
@@ -239,7 +251,8 @@ describe('donateComponent', () => {
 			itemQuantity: 1,
 			itemZipCode: 'test',
 			itemCity: 'test',
-			itemCategory: 'test'
+			itemCategory: 'test',
+			imgName: 'test'
 		};
 		const component = renderer.create(<Donate props={props}/>);
 		window.alert = jest.fn();
@@ -365,7 +378,7 @@ describe('donateComponent', () => {
 			apiStatus: true
 		};
 		const component = renderer.create(<Donate props={props}/>);
-		component.root.findAllByType('input')[6].props.onClick().then((val) => {
+		component.root.findAllByType('input')[7].props.onClick().then((val) => {
 			expect(val).toEqual(false);
 			done();
 		}).catch((err) => {

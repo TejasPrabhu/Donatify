@@ -22,9 +22,41 @@ class Donate extends React.Component {
 			itemCity: {},
 			itemDonorId: props.props && props.props.userId,
 			itemCategory: {},
-			loading: false
+			loading: false,
+			selectedFile: null,
+			imgName: ''
 		};
 	}
+
+	// On file select (from the pop up)
+	onFileChange = event => {
+
+		// Update the state
+		this.setState({ selectedFile: event.target.files[0] });
+
+	};
+
+	onFileUpload = async () => {
+		// e.preventDefault();
+		const file = this.state.selectedFile;
+		console.log(file);
+		if (file != null) {
+			const data = new FormData();
+			data.append('image', file);
+
+			let response = await fetch('http://localhost:5001/uploadimage', {
+				method: 'post',
+				body: data,
+			}
+			);
+			let res = await response.json();
+			console.log(res);
+			if (res.status !== 200){
+				alert('Error uploading file');
+			}
+			return res;
+		}
+	};
 
 	/**
 	 * Update state with user entered values
@@ -64,6 +96,19 @@ class Donate extends React.Component {
 			alert('Missing value for category. Enter category for the item.');
 			return false;
 		}
+		if (this.state[keys['itemQuantity']] === '') {
+			this.setState({itemQuantity: 1});
+		}
+		if (this.state.selectedFile === null) {
+			alert('Missing value for image. Please upload an image.');
+			return false;
+		}
+		if (this.state.selectedFile != 'test') {
+			const res = await this.onFileUpload();
+			this.setState({
+				imgName: res.data['imgName']
+			});
+		}
 		if (this.props.props) {
 			const apiInput = {
 				itemName: this.state.itemName,
@@ -72,7 +117,8 @@ class Donate extends React.Component {
 				itemZipCode: this.state.itemZipCode,
 				itemCity: this.state.itemCity.value,
 				itemDonorId: this.state.itemDonorId,
-				itemCategory: this.state.itemCategory.value
+				itemCategory: this.state.itemCategory.value,
+				imgName: this.state.imgName
 			};
 			this.setState({
 				loading: true
@@ -163,6 +209,10 @@ class Donate extends React.Component {
 									<textarea name='description' id='itemDescription' placeholder='Item description' value={this.state.itemDescription} onChange={this.handleInput} required />
 								</div>
 								<div className='form-group'>
+									<img src='../signup-zip.png' alt='item quantity' />
+									<input type='text' name='quantity' id='itemQuantity' placeholder='Item quantity' value={this.state.itemQuantity} onChange={this.handleInput} />
+								</div>
+								<div className='form-group'>
 									<img src='../signup-zip.png' alt='item zipcode' />
 									<input type='text' name='zipcode' id='itemZipCode' placeholder='Item zipcode' value={this.state.itemZipCode} onChange={this.handleInput} required />
 								</div>
@@ -191,6 +241,9 @@ class Donate extends React.Component {
 										name='itemCategory'
 										onChange={(event) => this.handleInput({values: event, name: 'itemCategory'})}
 									/>
+								</div>
+								<div>
+									<input type="file" onChange={this.onFileChange} />
 								</div>
 								<div className='form-group form-button'>
 									{this.state.loading ? <Spinner/> : <input type='submit' name='donate' id='donate' className='form-submit' value='Donate' onClick={this.handleSubmit} />}

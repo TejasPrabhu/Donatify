@@ -2,9 +2,7 @@ name: Frontend run code coverage and build docs
 
 on:
   push:
-    branches: [ "main" ]
   pull_request:
-    branches: [ "main" ]
 
 jobs:
   build:
@@ -22,7 +20,7 @@ jobs:
         fetch-depth: 2 
 
     - name: Set up Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
 
@@ -39,7 +37,7 @@ jobs:
     - name: Run the frontend tests
       run: |
         cd src/frontend
-        npm test -- --coverage
+        npm test -- --coverage --updateSnapshot
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v2

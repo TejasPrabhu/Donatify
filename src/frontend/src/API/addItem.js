@@ -32,7 +32,8 @@ const addItemApi = (value) => {
 		zipcode: value.itemZipCode,
 		city: value.itemCity,
 		donor_id: value.itemDonorId,
-		category: value.itemCategory
+		category: value.itemCategory,
+		img_url: value.imgName
 	});
 };
 export default addItemApi;

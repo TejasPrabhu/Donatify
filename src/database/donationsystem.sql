@@ -47,7 +47,8 @@ CREATE TABLE `items` (
   `zipcode` varchar(20) NOT NULL,
   `city` varchar(1000) NOT NULL,
   `donor_id` int(11) NOT NULL,
-  `category` varchar(1000) NOT NULL
+  `category` varchar(1000) NOT NULL,
+  `img_url` varchar(1000)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -80,7 +81,16 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`ID`, `Name`, `Email`, `Password`, `City`, `Zipcode`, `Interests`) VALUES
-(1, 'ABC', 'abc@gmail.com', '1234567', 'Raleigh', '27606', '[\"food\", \"furniture\", \"appliance\", \"electronics\"]');
+(1, 'ABC', 'abc@gmail.com', '1234567', 'Raleigh', '27606', '[\"food\", \"furniture\", \"appliance\", \"electronics\"]'),
+(2, 'XYZ', 'xyz@gmail.com', '1234567', 'Raleigh', '27606', '[\"food\"');
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `donation` (`donation_id`, `item_id`, `recipient_id`) VALUES
+(1, 1, 2),
+(2, 3, 1);
 
 --
 -- Indexes for dumped tables

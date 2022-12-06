@@ -1,10 +1,8 @@
 name: Backend run code coverage and build docs
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  - push
+  - pull_request
 
 jobs:
   build:
@@ -13,6 +11,16 @@ jobs:
     strategy:
       matrix:
         python-version: ["3.8", "3.9", "3.10"]
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: donationsystem
+        ports:
+            - '8888:3306'
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
     - name: Checkout repository
@@ -35,6 +43,11 @@ jobs:
       run: |
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+    - name: Set up MySQL
+      run:  |
+        mysql -h 127.0.0.1 -P 8888 -u root -ppassword -e 'CREATE DATABASE IF NOT EXISTS donationsystem;'
+        mysql -h 127.0.0.1 -P 8888 -u root -ppassword donationsystem < src/database/donationsystem.sql;
 
     - name: Test and code coverage with custom test engine
       run: |

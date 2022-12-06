@@ -3,6 +3,9 @@ import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import { WithContext as ReactTags } from 'react-tag-input';
 import { Spinner } from 'reactstrap';
+import styled from 'styled-components';
+import emailjs from 'emailjs-com';
+import { json } from 'react-router-dom';
 
 /**
  * React component for RegisterUser
@@ -16,13 +19,17 @@ class RegisterUser extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			otpbtn: 'Verify OTP',
+			mailbtn: 'Send OTP',
 			name: '',
 			email: '',
+			otp:'',
+			genotp:'',
 			pass: '',
 			rePass: '',
 			cities: [],
 			zipCodes: [],
-			interests: []
+			interests: [],
 		};
 	}
 
@@ -130,6 +137,60 @@ class RegisterUser extends React.Component {
 		document.getElementsByClassName('signup-image-link')[0].href = url.origin;
 	};
 
+	genOTP = async () => {
+		var string = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		let OTP = '';
+		var len = string.length;
+		for (let i = 0; i < 6; i++ ) {
+			var char = string[Math.floor(Math.random() * len)];
+			OTP = OTP + char;
+		}
+		this.setState({genotp: OTP});
+	};
+
+	sendOTP = async(e) => {
+		e.preventDefault();
+		// const OTP = await this.genOTP();
+		// this.setState({genotp: OTP});
+		if(this.state.email === ''){
+			alert('Please enter the mail ID and retry.');
+			return;
+		}
+		const emailRegex = new RegExp('\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})');
+		if (!this.state.email.match(emailRegex)) {
+			alert('Email format not correct. Enter email in correct format');
+			return;
+		}
+		this.setState({mailbtn: 'Sending mail...'});
+		await this.genOTP();
+		console.log('genotp',this.state.genotp);
+		var data = {
+			'mail': this.state.email,
+			'otp': this.state.genotp
+		};
+		let response = await fetch('http://localhost:5001/getOTP', {
+			method: 'post',
+			headers: {'Content-Type':'application/json'},
+			body: JSON.stringify(data),
+		});
+		let res = await response.json();
+		this.setState({mailbtn: 'Resend mail'});
+		if(res.status !== 200)
+			alert('OTP not sent. Please try again.');
+		return res;
+	};
+	authOTP = () => {
+		console.log('genotp',this.state.genotp);
+		console.log('otp', this.state.otp);
+		if(this.state.genotp === this.state.otp){
+			console.log('success');
+			this.setState({otpbtn: 'OTP verified'});
+		}
+		else{
+			alert('Invalid OTP. Please try again.');
+		}
+	};
+
 	/**
 	 * Render RegisterUser component
 	 * @returns {React.Component} Form with register user related HTML tags
@@ -181,31 +242,50 @@ class RegisterUser extends React.Component {
 			enter: 13,
 		};
 		const delimiters = [keyCodes.comma, keyCodes.enter];
+		const Button = styled.button`
+		background-color: blue;
+		color: white;
+		font-size: 12px;
+		padding: 8px 8px;
+		border-radius: 5px;
+		margin: 5px 0px;
+		cursor: pointer;
+		`;
 		return (
-			<div className='signup'>
-				<div className="container">
+			<div className='signup' style={{ backgroundRepeat: 'repeat-y' }}>
+				<div className="container" style={{ paddingTop: -50 }}>
 					<div className="signup-content">
 						<div className="signup-form">
 							<h2 className="form-title">Sign up</h2>
 							<form className="register-form" id="register-form">
 								<div className="form-group">
-									<img src="signup-name.png" alt='signup name'/>
-									<input autoFocus type="text" name="name" id="name" placeholder="Your Name" value={this.state.name} onChange={this.handleInput} required/>
+									<img src="signup-name.png" alt='signup name' />
+									<input autoFocus type="text" name="name" id="name" placeholder="Your Name" value={this.state.name} onChange={this.handleInput} required />
 								</div>
 								<div className="form-group">
-									<img src="signup-email.png" alt='signup enail'/>
-									<input type="email" name="email" id="email" placeholder="Your Email" value={this.state.email} onChange={this.handleInput} required/>
+									<img src="signup-email.png" alt='signup enail' />
+									<input type="email" name="email" id="email" placeholder="Your Email" value={this.state.email} onChange={this.handleInput} required />
+								</div>
+								<div><Button onClick={this.sendOTP}>
+									{this.state.mailbtn}
+								</Button></div>
+								<div className="form-group">
+									<img src="OTP-email.png" alt='OTP for the email'/>
+									<input type="text" name="otp" id="otp" placeholder="Please enter the received OTP" value={this.state.otp} onChange={this.handleInput} required/>
+								</div>
+								<div><Button onClick={this.authOTP}>
+									{this.state.otpbtn}
+								</Button></div>
+								<div className="form-group">
+									<img src="signup-pass.png" alt='signup password' />
+									<input type="password" name="pass" id="pass" placeholder="Password" value={this.state.pass} onChange={this.handleInput} required />
 								</div>
 								<div className="form-group">
-									<img src="signup-pass.png" alt='signup password'/>
-									<input type="password" name="pass" id="pass" placeholder="Password" value={this.state.pass} onChange={this.handleInput} required/>
+									<img src="signup-repass.png" alt='signup repeat password' />
+									<input type="password" className={this.state.pass !== this.state.rePass ? 'error' : ''} name="rePass" id="rePass" placeholder="Repeat your password" value={this.state.rePass} onChange={this.handleInput} required />
 								</div>
-								<div className="form-group">
-									<img src="signup-repass.png" alt='signup repeat password'/>
-									<input type="password" className={this.state.pass !== this.state.rePass ? 'error' : ''} name="rePass" id="rePass" placeholder="Repeat your password" value={this.state.rePass} onChange={this.handleInput} required/>
-								</div>
-								<div className="form-group" style={{overflow: 'unset'}}>
-									<img src="signup-city.png" alt='signup city'/>
+								<div className="form-group" style={{ overflow: 'unset' }}>
+									<img src="signup-city.png" alt='signup city' />
 									<Select
 										closeMenuOnSelect={false}
 										components={animatedComponents}
@@ -215,11 +295,11 @@ class RegisterUser extends React.Component {
 										maxMenuHeight={200}
 										menuPlacement='top'
 										name='city'
-										onChange={(event) => this.handleInput({values: event, name: 'cities'})}
+										onChange={(event) => this.handleInput({ values: event, name: 'cities' })}
 									/>
 								</div>
 								<div className="form-group">
-									<img src="signup-zip.png" alt='signup zip'/>
+									<img src="signup-zip.png" alt='signup zip' />
 									<ReactTags
 										name='zip'
 										id='zip'
@@ -231,8 +311,8 @@ class RegisterUser extends React.Component {
 										autofocus={false}
 									/>
 								</div>
-								<div className="form-group" style={{overflow: 'unset'}}>
-									<img src="signup-groceries.png" alt='signup items'/>
+								<div className="form-group" style={{ overflow: 'unset' }}>
+									<img src="signup-groceries.png" alt='signup items' />
 									<Select
 										closeMenuOnSelect={false}
 										components={animatedComponents}
@@ -242,7 +322,7 @@ class RegisterUser extends React.Component {
 										maxMenuHeight={200}
 										menuPlacement='top'
 										name='interests'
-										onChange={(event) => this.handleInput({values: event, name: 'interests'})}
+										onChange={(event) => this.handleInput({ values: event, name: 'interests' })}
 									/>
 								</div>
 								{/* <div className="form-group">
@@ -250,12 +330,12 @@ class RegisterUser extends React.Component {
 									<label for="agree-term" className="label-agree-term"><span><span></span></span>I agree all statements in <a className="term-service">Terms of service</a></label>
 								</div> */}
 								<div className="form-group form-button">
-									{this.state.loading ? <Spinner /> : <input type="submit" name="signup" id="signup" className="form-submit" value="Register" onClick={this.handleSubmit}/>}
+									{this.state.loading ? <Spinner /> : <input type="submit" name="signup" id="signup" className="form-submit" value="Register" onClick={this.handleSubmit} />}
 								</div>
 							</form>
 						</div>
 						<div className="signup-image">
-							<figure><img src="signup-image.png" alt="sign up"/></figure>
+							<figure><img src="signup-image.png" alt="sign up" /></figure>
 							<a href="" onClick={() => this.redirectToPath('/')} className="signup-image-link">I am already a member</a>
 						</div>
 					</div>

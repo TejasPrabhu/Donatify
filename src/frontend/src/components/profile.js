@@ -96,8 +96,8 @@ class Profile extends Component {
 	 */
 	handleSave = async () => {
 		let zipCodes = this.state.user.zipCodes.map((code) => (code.text));
-		let res = await updateProfileAPI({ ...this.state.user,id:this.props.props.userId, zipCodes });
-		if (res.data&&res.data.status===200) {
+		let res = await updateProfileAPI({ ...this.state.user, id: this.props.props.userId, zipCodes });
+		if (res.data && res.data.status === 200) {
 			alert('Profile updated successfully');
 			await this.loadProfile();
 			this.toggle();
@@ -260,7 +260,7 @@ class Profile extends Component {
 							{this.state.user.email}
 						</CardSubtitle>
 						<CardText>
-							CItites: {this.state.user.city}
+							City: {this.state.user.city}
 						</CardText>
 						<Button color="danger" onClick={this.toggle}>
 							Edit Profile

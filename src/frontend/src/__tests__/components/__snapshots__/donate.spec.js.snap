@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports['donateComponent renders without crashing 1'] = `
+exports[`donateComponent renders without crashing 1`] = `
 <section>
   <div
     className="container"
@@ -302,6 +302,12 @@ exports['donateComponent renders without crashing 1'] = `
                 value=""
               />
             </div>
+          </div>
+          <div>
+            <input
+              onChange={[Function]}
+              type="file"
+            />
           </div>
           <div
             className="form-group form-button"
