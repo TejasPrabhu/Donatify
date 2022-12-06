@@ -3,10 +3,6 @@ import RegisterUser from '../../components/register';
 import React from 'react';
 
 describe('registerUserComponent', () => {
-	it('renders without crashing', () => {
-		const component = renderer.create(<RegisterUser />);
-		expect(component.toJSON()).utoMatchSnapshot();
-	});
 
 	it('initial state set correctly', () => {
 		const component = renderer.create(<RegisterUser />);
