@@ -45,11 +45,11 @@ from src.Backend.utils import *
 import os
 import time
 
-
 # Flask application configuration
 app = Flask(__name__)
 CORS(app)
 UPLOAD_FOLDER = "src/Backend/images/"
+
 
 #### error handlers ####
 # http exceptions handler
@@ -204,7 +204,8 @@ def additem():
         data = json.loads(request.data)
 
         status, msg = insert_item(
-            data['item_name'], data['quantity'], data['description'], data['zipcode'], data['city'], data['donor_id'], data['category'], data['img_url'])
+            data['item_name'], data['quantity'], data['description'], data['zipcode'], data['city'], data['donor_id'],
+            data['category'], data['img_url'])
 
         if status:
             return jsonify({"status": 200, "data": {}, "message": msg})
@@ -388,7 +389,8 @@ def register():
         if (status == 0):
             return jsonify({"status": 400, "data": {}, "message": "Error while Accessing the database"})
         if (check):
-            return jsonify({"status": 405, "data": {}, "message": "Please fill out the form again! The Email is taken/or is written in the wrong format"})
+            return jsonify({"status": 405, "data": {},
+                            "message": "Please fill out the form again! The Email is taken/or is written in the wrong format"})
 
         check = addUser(name, password, email, city, zipcode, interests)
         if (check):
@@ -539,7 +541,7 @@ def getItem():
 
 @app.route('/getOTP', methods=['POST'])
 def getOTP():
-	"""
+    """
     Sending a mail containing the automatically generated OTP.\n
     Response is a json which contains:\n
     1) Status - This can take 3 values = (200 : Perfect response, 405 : Database Error, 400 : Failure from client side, 500:the server encountered an unexpected condition that prevented it from fulfilling the request ).\n
@@ -556,12 +558,12 @@ def getOTP():
     json
         Returns a json containing the status, data(No data associated with this function, hence the data is empty), message in accordance with the status.
     """
-	data=request.get_json()
-	otp = data['otp']
-	mail = data['mail']
-	status, msg = sendmail(mail, otp)
-	status = 200 if status else 400
-	return jsonify({"status": status, "data": {}, "message": msg})
+    data = request.get_json()
+    otp = data['otp']
+    mail = data['mail']
+    status, msg = sendmail(mail, otp)
+    status = 200 if status else 400
+    return jsonify({"status": status, "data": {}, "message": msg})
 
 
 if __name__ == '__main__':
