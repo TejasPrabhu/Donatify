@@ -182,15 +182,9 @@ def additem():
                 smtp_port.ehlo()
                 smtp_port.starttls()
                 smtp_port.login('donatifynotifications@gmail.com' , 'pvuiescbegnhpxyj')
-                subject = 'Lorem ipsum dolor sit amet'
+                subject = 'A new item is up for donation!!'
                 body = 'A new item is up for donation. Go to Donatify app to be the first person to get the item!! Hurry up!!'
-
-                email_text = """
-                            A new item is up for donation. Go to Donatify app to be the first person to get the item!! Hurry up!!
-                            """ 
-#                subject = "Hello"
-#                body = "Email Automation Project!"
-#                final_message = f"Subject: {subject} \n \n {body}"
+                email_text = 'Subject: {}\n\n{}'.format(subject, body)
                 smtp_port.sendmail('donatifynotifications@gmail.com', emails, email_text)
                 print("Email Sent")
             except Exception as ex:
