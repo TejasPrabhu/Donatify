@@ -29,6 +29,10 @@ https://user-images.githubusercontent.com/112216701/194792312-64c5dea3-24a1-4a61
 
 ## Updated App in action
 
+https://user-images.githubusercontent.com/42717178/205879093-66b3527b-4787-4315-b8af-ffc50d217415.mp4
+
+## Screenshots
+
 Registration with OTP and Login:
 Our application provides the feature of email verification before the user register and start using the application. This helps us to provide a secure platform to donate and receive.
 
