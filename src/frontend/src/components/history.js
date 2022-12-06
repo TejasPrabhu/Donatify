@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import getDonorHistoryAPI from '../API/getDonorHistory';
 import getRecipientHistoryAPI from '../API/getRecipientHistory';
 import { Avatar, Radio, Card } from 'antd';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Form, Input } from 'reactstrap';
+import { Modal as ViewModal} from 'antd';
+import { Modal as EditModal} from 'reactstrap';
+import { Button, ModalHeader, ModalBody, ModalFooter, FormGroup, Form, Input } from 'reactstrap';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import updateItemAPI from '../API/updateItem';
@@ -204,6 +206,7 @@ class History extends Component {
 		 * @param {Object} data Object containing item details
 		 */
 		const showModal = (data) => {
+			console.log('inside view modal func');
 			this.setState({
 				d: {
 					...data
@@ -281,7 +284,8 @@ class History extends Component {
 
 		return (
 			<>
-				{this.state.isModalOpen ? (<Modal title="Item Details" open={this.state.isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+				{console.log(this.state.isModalOpen)}
+				{this.state.isModalOpen ? (<ViewModal title="Item Details" open={this.state.isModalOpen} onOk={handleOk} onCancel={handleCancel} onClick={e => e.stopPropagation}>
 					<p>Item Name: {this.state.d.itemName}</p>
 					<p>Item Quantity: {this.state.d.itemQuantity}</p>
 					<p>Item Description: {this.state.d.itemDescription}</p>
@@ -289,11 +293,12 @@ class History extends Component {
 					<p>Item City: {this.state.d.itemCity}</p>
 					<p>Item Category: {this.state.d.itemCategory}</p>
 					{!this.state.history==='Donate History'?(<p>Donor Name: {this.state.d.itemDonorName || ''}</p>):(<></>)}
-				</Modal>) : (<></>)}
-
+				</ViewModal>) : (<></>)}
+				{console.log('again')}
+				{console.log(this.state.isModalOpen)}
 				{this.state.isEditModalOpen ? (
 					// toggle={this.toggle}>
-					<Modal isOpen={this.state.isEditModalOpen}>
+					<EditModal isOpen={this.state.isEditModalOpen}>
 						<ModalHeader toggle={this.toggle}>Edit Item</ModalHeader>
 						<ModalBody>
 							<Form>
@@ -393,7 +398,7 @@ class History extends Component {
 								Cancel
 							</Button>
 						</ModalFooter>
-					</Modal>
+					</EditModal>
 				) : (<></>)}
 
 				{/* <Modal title="Item Details" open={this.state.isModalOpen} onOk={handleOk} onCancel={handleCancel}>
