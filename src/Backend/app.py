@@ -190,7 +190,6 @@ def additem():
             except Exception as ex:
                 print ("Something went wrong….",ex)
             smtp_port.quit()
-            print(emails,end="-----------------_!!!!!!!!!!!!!!!!!!!!!!_-----------\n\n")
             return jsonify({"status": 200, "data": {}, "message": msg})
         else:
             return jsonify({"status": 400, "data": {}, "message": msg})
