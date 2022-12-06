@@ -6,10 +6,10 @@ import re
 import mysql.connector
 from ast import literal_eval as make_tuple
 from src.Backend.dbconfig import constants
+
 import smtplib, ssl
 
 global conn
-
 try:
     conn = mysql.connector.connect(
         host=constants["host"], user=constants["user"],
@@ -478,67 +478,30 @@ def getUserProfileByEmail(email):
     # exit("some error occurred in get_items: {}".format(e))
 
 
-def loginCheck(email, password):
-    """
-	Checks if the password and email are matching in the database.
-
-	Parameters
-	----------
-	email : string
-		Email of the user.
-	password : string
-		Password of the user.
-
-	Returns
-	----------
-	tuple
-		Returns a tuple with two elements. The first element(a boolean variable) is a check to see if there is a user present with matching password and email. The second element is a status code of whether there is a database error or not.
-	"""
-
-    try:
-        cursor = connection().cursor(dictionary=True)
-        cursor.execute(
-            'SELECT * FROM users WHERE email = %s AND password = %s', (email, password))
-        user = cursor.fetchone()
-        cursor.close()
-        if user:
-            return (True, 1)
-        else:
-            return (False, 1)
-    except mysql.connector.Error as error:
-        print(error)
-        return (False, 0)
-
-    except Exception as e:
-        print("some error occurred in loginCheck: {}".format(e))
-        return (False, 0)
-    # exit("some error occurred in get_items: {}".format(e))
-
-
 def addUser(name, password, email, city, zipcode, interests):
     """
-	Checks if the password and email are matching in the database.
+    Checks if the password and email are matching in the database.
 
-	Parameters
-	----------
-	name : string
-		Name of the user.
-	password : string
-		Password of the user.
-	email : string
-		Email of the user.
-	city : list
-		List of cities which are of interest to the user.
-	zipcode : list
-		List of zipcodes which are of interest to the user.
-	interests : list
-		List of interests of the user.
+    Parameters
+    ----------
+    name : string
+        Name of the user.
+    password : string
+        Password of the user.
+    email : string
+        Email of the user.
+    city : list
+        List of cities which are of interest to the user.
+    zipcode : list
+        List of zipcodes which are of interest to the user.
+    interests : list
+        List of interests of the user.
 
-	Returns
-	----------
-	bool
-		Checks if the user got added to the database or not.
-	"""
+    Returns
+    ----------
+    bool
+        Checks if the user got added to the database or not.
+    """
 
     try:
         cursor = connection().cursor(dictionary=True)
