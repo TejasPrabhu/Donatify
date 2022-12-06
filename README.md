@@ -27,16 +27,32 @@ So, we through our simple application, have created a platform for people to don
 
 https://user-images.githubusercontent.com/112216701/194792312-64c5dea3-24a1-4a61-942c-df805e35800a.mp4
 
-## Application after updation
-## App in action
+## Updated App in action
 
-registration with OTP and Login:
+Registration with OTP and Login:
+Our application provides the feature of email verification before the user register and start using the application. This helps us to provide a secure platform to donate and receive.
 
+![register](https://user-images.githubusercontent.com/52947925/205829598-062d21d3-a49d-4a78-af2e-6f7ffb5c2bf2.JPG)
+OTP is instantly received to the new user's given mail ID and using this the user can complete the registration process.
 
-Donate an item:
+![OTP](https://user-images.githubusercontent.com/52947925/205829683-17fb1e4c-314b-430e-8eb3-6189e5116bc3.JPG)
+Now the user can login.
 
+![Login](https://user-images.githubusercontent.com/52947925/205830587-4a6eb183-bbb9-4cd0-bfad-b42e734e6854.jpg)
 
 Marketplace:
+They can look at the current marketplace to check if there are any items which pique their interest.
+![marketplace](https://user-images.githubusercontent.com/52947925/205832545-3d9c0a88-2e40-4bbb-89f1-9fcb76045bbe.jpg)
+
+Donate an item:
+Further, they can use the donate feature to donate any item at their disposal.
+![donate](https://user-images.githubusercontent.com/52947925/205831779-88b2c433-9634-4075-802b-24fdf0afabc6.jpg)
+
+Also our application provides a history feature for the user to keep a record of their donation.
+![history](https://user-images.githubusercontent.com/52947925/205834741-17822c4d-6d61-4338-bfc7-887e5f08c13f.jpg)
+
+Once the user becomes a part of the donatify community, they are updated as soon as a new iten is donated on the platform through their registered mail.
+![mail_notification](https://user-images.githubusercontent.com/52947925/205835012-40c555a9-6ae4-4796-be5e-c4b9b848aca2.jpg)
 
 
 ## Getting started
