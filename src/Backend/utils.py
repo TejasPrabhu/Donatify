@@ -6,6 +6,7 @@ import re
 import mysql.connector
 from ast import literal_eval as make_tuple
 from src.Backend.dbconfig import constants
+import smtplib, ssl
 
 global conn
 
@@ -448,9 +449,9 @@ def getUserProfileByEmail(email):
 			'SELECT ID, name, email, city, zipcode, interests FROM users WHERE email = %s', (email,))
 		user = cursor.fetchone()
 		print(user)
-		user["city"] = ast.literal_eval(user["city"])
-		user["zipcode"] = ast.literal_eval(user["zipcode"])
-		user["interests"] = ast.literal_eval(user["interests"])
+		# user["city"] = ast.literal_eval(user["city"])
+		# user["zipcode"] = ast.literal_eval(user["zipcode"])
+		# user["interests"] = ast.literal_eval(user["interests"])
 		cursor.close()
 		return user
 	except mysql.connector.Error as error:
@@ -577,3 +578,42 @@ def checkDuplicateEmail(email):
 	except Exception as e:
 		print("some error occurred in checkDuplicateEmail: {}".format(e))
 		return (False, 0)
+
+
+def sendmail(mail, otp):
+	"""
+    Send automatically generated OTP to the given mail address.
+
+    Parameters
+    ----------
+    email : string
+    Email of the user.
+	OTP : string
+	automatically generated OTP
+
+    Returns
+    ----------
+	bool
+        Returns true if the mail is sucessfully sent.
+    """
+	port = 587  # For starttls
+	smtp_server = "smtp.gmail.com"
+	sender_email = "naveen.donatify@gmail.com"
+	receiver_email = mail
+	password = "kkifnlhthkdeurvb"
+	subject = "OTP verification from Donatify"
+	text = "Enter the code given below on the Donatify Website to register your email id and continue enjoying the donatify experience.\nYour OTP: {}".format(otp)
+	message = 'Subject: {}\n\n{}'.format(subject, text)
+
+	context = ssl.create_default_context()
+	try:
+		with smtplib.SMTP(smtp_server, port) as server:
+			server.ehlo()  # Can be omitted
+			server.starttls(context=context)
+			server.ehlo()  # Can be omitted
+			server.login(sender_email, password)
+			server.sendmail(sender_email, receiver_email, message)
+			return True
+	except Exception as e:
+		print("Error to send mail: {}".format(e))
+		return False
