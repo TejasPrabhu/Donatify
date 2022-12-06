@@ -54,6 +54,18 @@ Also our application provides a history feature for the user to keep a record of
 Once the user becomes a part of the donatify community, they are updated as soon as a new iten is donated on the platform through their registered mail.
 ![mail_notification](https://user-images.githubusercontent.com/52947925/205835012-40c555a9-6ae4-4796-be5e-c4b9b848aca2.jpg)
 
+## Features implemented in the update
+###Improved security:
+Security is the biggest concern in the current world and we have taken significant steps to ensure that our application is secure from malicious users. The authorization of user to register using the OTP sent to the given mail ID by 2 step verification prevents some forms of identity theft by making sure that a captured user name/password pair cannot be used a second time.
+
+###Secure database:
+We have secured the database through encyption and this helps to safeguarded from security breaches and hacking activities like firewall intrusion, virus spread, and ransomware. This helps us to protect sensitive information, which cannot be shared with outsiders at any cause.
+
+###Versatile marketplace and notifying registered users:
+The user can access the newly updated marketplace to search for any items of his choice and place a request on those items which interests him. This would notify the item owner and the donation can be completed upon his choice. The item owner can dynamically update any items he had previously uploaded which can be accessed through his history. Furthermore, each registered user is notified of any new donation which are up for grabs through their registered mail.
+
+###Request feature:
+Allowing the user's to requesst for the any item in the marketplace. Upon request the item owner is notified and he can take the final call on whom to donate based on their location. This helps the person who is donating to find the closest person and the other user's to place a request.
 
 ## Getting started
 
